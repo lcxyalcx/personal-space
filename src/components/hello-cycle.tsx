@@ -29,7 +29,7 @@ export function HelloCycle() {
   const bg = HELLO_GRADIENTS[i % HELLO_GRADIENTS.length];
 
   return (
-    <div className="hello-stage mb-3 min-h-[1.12em] sm:mb-5">
+    <div className="hello-stage mb-3 min-h-[1.2em] overflow-visible pb-0.5 sm:mb-5">
       <AnimatePresence mode="wait">
         <motion.p
           key={lines[i]}
@@ -42,7 +42,7 @@ export function HelloCycle() {
             transition: { duration: 0.52, ease: easeApple },
           }}
           transition={{ duration: 0.72, ease: easeApple }}
-          className="hello-line text-center text-[clamp(2.85rem,11vw,5.75rem)] font-semibold leading-[0.98] tracking-[-0.03em] sm:text-left"
+          className="hello-line text-center text-[clamp(2.85rem,11vw,5.75rem)] font-semibold leading-[1.08] tracking-[-0.03em] sm:text-left"
           style={{
             background: bg,
             WebkitBackgroundClip: "text",

@@ -46,7 +46,7 @@ export function Hero() {
   return (
     <section
       id="top"
-      className="relative flex min-h-[92vh] flex-col justify-center overflow-hidden px-4 pb-28 pt-24 sm:px-6"
+      className="relative flex min-h-[92vh] flex-col justify-center overflow-x-hidden px-4 pb-28 pt-24 sm:px-6"
     >
       <div className="pointer-events-none absolute inset-0 hero-glow" aria-hidden />
       <div className="hero-mesh pointer-events-none absolute inset-0" aria-hidden />

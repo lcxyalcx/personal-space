@@ -1,10 +1,30 @@
 "use client";
 
-import { ArrowUpRight, Calendar, Rss, Share2 } from "lucide-react";
+import { ArrowUpRight, Calendar, Clock, Rss, Share2 } from "lucide-react";
 import { motion } from "framer-motion";
+import Link from "next/link";
 import { blogMeta, blogPosts, sectionCopy } from "@/data/site";
+import { LikeButton } from "@/components/like-button";
+import { estimateReadMinutes } from "@/lib/read-time";
 
 const spring = { type: "spring" as const, stiffness: 400, damping: 30 };
+
+const likeLabelsSite = (c: (typeof sectionCopy)["blog"]) => ({
+  like: c.likeSiteLabel,
+  liked: c.likedLabel,
+  suffix: c.likeCountSuffix,
+  localHint: c.likeLocalHint,
+});
+
+const likeLabelsPost = (c: (typeof sectionCopy)["blog"]) => ({
+  like: c.likePostLabel,
+  liked: c.likedLabel,
+  suffix: c.likeCountSuffix,
+});
+
+function isInternalHref(href: string) {
+  return href.startsWith("/");
+}
 
 export function BlogSection() {
   const c = sectionCopy.blog;
@@ -57,6 +77,11 @@ export function BlogSection() {
           </div>
         </div>
 
+        <div className="mb-10 flex flex-col gap-4 rounded-2xl border border-[var(--border)] bg-surface/90 px-5 py-4 shadow-sm sm:flex-row sm:items-center sm:justify-between sm:px-6">
+          <p className="text-[15px] leading-relaxed text-muted">{c.siteLikeIntro}</p>
+          <LikeButton scope="site" labels={likeLabelsSite(c)} className="shrink-0" size="md" />
+        </div>
+
         {blogPosts.length === 0 ? (
           <p className="rounded-2xl border border-dashed border-[var(--border-strong)] bg-surface/80 px-6 py-10 text-center text-[15px] leading-relaxed text-muted">
             {c.emptyHint}
@@ -72,36 +97,62 @@ export function BlogSection() {
               show: { transition: { staggerChildren: 0.08 } },
             }}
           >
-            {blogPosts.map((post) => (
-              <motion.li
-                key={post.href}
-                variants={{
-                  hidden: { opacity: 0, y: 28 },
-                  show: { opacity: 1, y: 0, transition: spring },
-                }}
-              >
-                <article className="card-shine group relative flex h-full flex-col overflow-hidden rounded-2xl border border-[var(--border)] bg-surface p-6 shadow-sm transition-shadow hover:shadow-lg sm:p-7">
-                  <div className="flex flex-wrap items-center gap-2 text-xs text-muted-2">
-                    <Calendar className="h-3.5 w-3.5 shrink-0" strokeWidth={1.75} aria-hidden />
-                    <span>{post.date}</span>
-                    {post.tag ? (
-                      <span className="rounded-full bg-bg-alt px-2 py-0.5 font-medium text-muted">{post.tag}</span>
-                    ) : null}
-                  </div>
-                  <h3 className="mt-3 text-xl font-semibold tracking-tight text-fg">{post.title}</h3>
-                  <p className="mt-2 flex-1 text-[15px] leading-relaxed text-muted">{post.excerpt}</p>
-                  <a
-                    href={post.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="mt-5 inline-flex items-center gap-1 text-sm font-medium text-link transition-colors hover:text-[var(--link-hover)]"
-                  >
-                    {c.readLabel}
-                    <ArrowUpRight className="h-4 w-4" strokeWidth={2} aria-hidden />
-                  </a>
-                </article>
-              </motion.li>
-            ))}
+            {blogPosts.map((post) => {
+              const readMin = estimateReadMinutes(`${post.title}\n${post.excerpt}`);
+              return (
+                <motion.li
+                  key={post.href}
+                  variants={{
+                    hidden: { opacity: 0, y: 28 },
+                    show: { opacity: 1, y: 0, transition: spring },
+                  }}
+                >
+                  <article className="card-shine group relative flex h-full flex-col overflow-hidden rounded-2xl border border-[var(--border)] bg-surface p-6 shadow-sm transition-shadow hover:shadow-lg sm:p-7">
+                    <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-muted-2">
+                      <span className="inline-flex items-center gap-1">
+                        <Calendar className="h-3.5 w-3.5 shrink-0" strokeWidth={1.75} aria-hidden />
+                        {post.date}
+                      </span>
+                      <span className="inline-flex items-center gap-1">
+                        <Clock className="h-3.5 w-3.5 shrink-0" strokeWidth={1.75} aria-hidden />
+                        {c.readApprox}
+                        {readMin}
+                        {c.readMinutes}
+                      </span>
+                      {post.tag ? (
+                        <span className="rounded-full bg-bg-alt px-2 py-0.5 font-medium text-muted">{post.tag}</span>
+                      ) : null}
+                    </div>
+                    <h3 className="mt-3 text-xl font-semibold tracking-tight text-fg">{post.title}</h3>
+                    <p className="mt-2 flex-1 text-[15px] leading-relaxed text-muted">{post.excerpt}</p>
+                    <div className="mt-5">
+                      {isInternalHref(post.href) ? (
+                        <Link
+                          href={post.href}
+                          className="inline-flex items-center gap-1 text-sm font-medium text-link transition-colors hover:text-[var(--link-hover)]"
+                        >
+                          {c.readLabel}
+                          <ArrowUpRight className="h-4 w-4" strokeWidth={2} aria-hidden />
+                        </Link>
+                      ) : (
+                        <a
+                          href={post.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1 text-sm font-medium text-link transition-colors hover:text-[var(--link-hover)]"
+                        >
+                          {c.readLabel}
+                          <ArrowUpRight className="h-4 w-4" strokeWidth={2} aria-hidden />
+                        </a>
+                      )}
+                    </div>
+                    <div className="mt-6 flex flex-col gap-2 border-t border-[var(--border)] pt-4">
+                      <LikeButton scope="post" href={post.href} labels={likeLabelsPost(c)} size="sm" />
+                    </div>
+                  </article>
+                </motion.li>
+              );
+            })}
           </motion.ul>
         )}
       </div>

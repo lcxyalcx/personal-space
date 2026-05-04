@@ -14,7 +14,7 @@
  * · hobbies / lifeNotes → 生活区左右两栏正文
  * · navItems          → 顶栏顺序与锚点 id（须与页面 section 的 id 一致）
  * · hero.greetings    → 首屏「Hello」式多语言轮播文案（数组顺序即轮播顺序）
- * · blogPosts / blogMeta / sectionCopy.blog → 博客列表、RSS 链接、区块标题与按钮文案
+ * · blogPosts（见 `blog-articles.ts`）/ blogMeta / sectionCopy.blog → 博客、RSS、点赞与阅读时间
  *
  * =============================================================================
  */
@@ -82,39 +82,30 @@ export const sectionCopy = {
   blog: {
     eyebrow: "写作",
     title: "博客与分享",
-    hint: "长文、笔记与可复用的经验；支持 RSS 订阅与一键分享本站。",
+    hint: "长文、笔记与可复用的经验；支持 RSS 订阅、一键分享本站，以及为单篇或全站点赞（可选接入 Redis 汇总）。",
     feedLabel: "RSS 订阅",
     shareLabel: "分享本站",
     readLabel: "阅读全文",
     emptyHint: "文章整理中。在 `blogPosts` 填入条目，并在 `blogMeta.feedUrl` 填写 RSS 地址即可启用订阅按钮。",
+    /** 博客区块顶部：全站鼓励语 */
+    siteLikeIntro: "觉得内容有帮助？可以点一下为我加油。",
+    likeSiteLabel: "点个赞",
+    likePostLabel: "赞",
+    likedLabel: "已赞",
+    /** 跟在数字后，如「12 次」 */
+    likeCountSuffix: "次",
+    /** 未配置 Upstash 时显示在「全站点赞」下方 */
+    likeLocalHint:
+      "未配置数据存储时不显示全站累计数字；你的支持仍会通过 Cookie 记录，避免重复点赞。配置见仓库 `.env.example`。",
+    readApprox: "约",
+    readMinutes: "分钟",
+    backToBlog: "返回博客列表",
+    postFooterLike: "喜欢这篇文章？",
   },
 } as const;
 
-export type BlogPost = {
-  title: string;
-  excerpt: string;
-  date: string;
-  href: string;
-  tag?: string;
-};
-
-/** 博客文章列表；无内容时可置为空数组 `[]` */
-export const blogPosts: BlogPost[] = [
-  {
-    title: "用类型系统把边界说清楚",
-    excerpt: "在 API 与领域模型之间，用 TypeScript 减少「口头约定」带来的返工。",
-    date: "2025-04-12",
-    href: "https://example.com/blog/types-boundaries",
-    tag: "TypeScript",
-  },
-  {
-    title: "从一次线上事故学到的可观测性清单",
-    excerpt: "指标、日志、链路之外，更重要的是团队对「何时算恢复」的共识。",
-    date: "2025-03-02",
-    href: "https://example.com/blog/observability",
-    tag: "SRE",
-  },
-];
+export type { BlogPost } from "./blog-articles";
+export { blogPosts } from "./blog-articles";
 
 /** `feedUrl` 留空则不显示 RSS 按钮 */
 export const blogMeta = {
