@@ -31,7 +31,7 @@ export const hero = {
   /** Apple「Hello」式开场：多行轮播，可增删语言 */
   greetings: ["你好。", "Hello.", "Bonjour.", "Hola."],
   headline: "探索大模型与 Agent 的技术边界。",
-  subline: "作为一名计算机背景的研究生，我对大语言模型推理加速、强化学习及 Agent 架构有着深刻理解。能够精准评估 AI 产品的技术边界与算力成本，并熟练运用投机解码等前沿技术优化模型性能表现，拥有敏锐的业务嗅觉与跨团队协作能力。",
+  subline: "Hello，I am Jacob Liu， a postgraduate student at Fudan University interested in LLM inference acceleration, reinforcement learning, and Agent architecture.Please feel free to explore my projects and blog posts to learn more about my work and interests.",
   /** 首屏副标题下方的一行补充说明 */
   statusLine: "复旦大学 · 电子信息研究生 · 计算与智能创新学院",
 };
@@ -49,7 +49,7 @@ export const sectionCopy = {
   education: {
     eyebrow: "教育",
     title: "教育经历",
-    hint: "学位、导师方向、竞赛与课程项目都可以写进 detail 字段。",
+    hint: "学位、研究方向、竞赛与课程项目",
   },
   projects: {
     eyebrow: "精选",
@@ -164,7 +164,7 @@ export const education: TimelineItem[] = [
     title: "通信工程 · 本科生",
     org: "南京大学 — 电子科学与工程学院",
     period: "2021.09 — 2025.06",
-    detail: "相关课程与基础学习。",
+    detail: " ",
   },
 ];
 

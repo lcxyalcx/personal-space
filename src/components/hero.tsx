@@ -84,7 +84,7 @@ export function Hero() {
           {hero.headline}
         </motion.h1>
         <motion.p
-          className="mx-auto mt-7 max-w-2xl text-center text-[clamp(1.05rem,2.4vw,1.35rem)] leading-relaxed text-muted sm:mx-0 sm:text-left"
+          className="mx-auto mt-7 max-w-2xl text-center text-[clamp(1.05rem,2.4vw,1.35rem)] leading-relaxed text-muted font-serif italic tracking-wide sm:mx-0 sm:text-left"
           initial={false}
           animate={{ opacity: 1, y: 0 }}
           transition={{ ...spring, delay: 0.22 }}
