@@ -20,25 +20,25 @@
  */
 
 export const siteMeta = {
-  title: "Jacob Liu · personal.space",
-  description: "开发者 / 造物癖 / 在代码与生活里找节奏的个人站点。",
+  title: "Jacob Liu | 个人主页",
+  description: "复旦大学电子信息研究生。关注大语言模型推理加速、强化学习及 Agent 架构。",
   author: "Jacob Liu",
   /** 用于页脚与结构化展示 */
-  handle: "jacobliu",
+  handle: "lcxyalcx",
 };
 
 export const hero = {
   /** Apple「Hello」式开场：多行轮播，可增删语言 */
   greetings: ["你好。", "Hello.", "Bonjour.", "Hola."],
-  headline: "把抽象，落成别人用得上的东西。",
-  subline: "构建可靠系统，也保留一点不合时宜的浪漫。",
+  headline: "探索大模型与 Agent 的技术边界。",
+  subline: "作为一名计算机背景的研究生，我对大语言模型推理加速、强化学习及 Agent 架构有着深刻理解。能够精准评估 AI 产品的技术边界与算力成本，并熟练运用投机解码等前沿技术优化模型性能表现，拥有敏锐的业务嗅觉与跨团队协作能力。",
   /** 首屏副标题下方的一行补充说明 */
-  statusLine: "常驻上海 · 关注开发者体验与系统可靠性 · 本站由 Next.js 驱动",
+  statusLine: "复旦大学 · 电子信息研究生 · 计算与智能创新学院",
 };
 
 export const social = {
-  github: "https://github.com/jacobliu",
-  email: "mailto:hello@example.com",
+  github: "https://github.com/lcxyalcx",
+  email: "mailto:25213090162@m.fudan.edu.cn",
   /** 可留空字符串隐藏对应按钮 */
   twitter: "",
   linkedin: "",
@@ -52,24 +52,24 @@ export const sectionCopy = {
     hint: "学位、导师方向、竞赛与课程项目都可以写进 detail 字段。",
   },
   projects: {
-    eyebrow: "项目",
-    title: "精选项目",
-    hint: "侧重点是架构、开发者体验与可维护性；链接可指向仓库或线上演示。",
+    eyebrow: "精选",
+    title: "个人作品",
+    hint: "这里将展示其他小工具与探索项目（开发中）。",
     linkLabel: "进一步了解",
   },
   resume: {
     eyebrow: "履历",
-    title: "工作与履历",
-    hint: "时间线可按「公司 / 角色」增删；下方技能矩阵同样来自数据文件。",
+    title: "项目经历",
+    hint: "在强化学习、多智能体与推理加速层面的业务实践。",
   },
   resumeSkills: {
     eyebrow: "能力",
-    title: "技能与工具",
+    title: "相关技能",
     /** 三列标题，顺序对应 languages / infra / frontend */
     columns: [
-      { title: "语言", skillKey: "languages" as const },
-      { title: "基础设施", skillKey: "infra" as const },
-      { title: "前端", skillKey: "frontend" as const },
+      { title: "编程语言", skillKey: "languages" as const },
+      { title: "框架与工具", skillKey: "infra" as const },
+      { title: "AI 与算法底座", skillKey: "frontend" as const },
     ],
   },
   life: {
@@ -129,27 +129,7 @@ export type Project = {
   year: string;
 };
 
-export const projects: Project[] = [
-  {
-    name: "CLI 工具链套件",
-    description: "为团队内部工作流封装的脚手架与发布流水线，减少重复配置与人为失误。",
-    stack: ["TypeScript", "Node", "GitHub Actions"],
-    link: "https://github.com",
-    year: "2025",
-  },
-  {
-    name: "实时协作白板",
-    description: "基于 CRDT 的多人编辑原型，探索低延迟同步与冲突合并策略。",
-    stack: ["React", "WebSocket", "Rust"],
-    year: "2024",
-  },
-  {
-    name: "个人知识库",
-    description: "本地优先的笔记与图谱，支持全文检索与版本快照。",
-    stack: ["Next.js", "SQLite", "MDX"],
-    year: "2024",
-  },
-];
+export const projects: Project[] = [];
 
 export type TimelineItem = {
   title: string;
@@ -160,40 +140,47 @@ export type TimelineItem = {
 
 export const experience: TimelineItem[] = [
   {
-    title: "高级软件工程师",
-    org: "某互联网产品团队",
-    period: "2023 — 至今",
+    title: "Multi-turn AI Agent 强化学习评测与优化",
+    org: "多轮交互场景建模, Multi-turn RL",
+    period: "2026.02 — 至今",
     detail:
-      "负责核心服务稳定性与性能预算，推动可观测性落地与发布节奏标准化。",
+      "业务场景拆解与建模：基于 RAGEN 实现了 MetaMathQA (数学推理)、WebShop（多步规划）等经典 Agent 任务场景。通过任务成功率、轨迹多样性等指标，评估 Agent 在 Multi-turn 环境下的训练表现。\n优化方案探索：创新性提出利用相邻轮次有效特征指导当前轮决策的优化方案，通过建立跨轮次的知识传递与信息重用机制，提升 Rollout 阶段的样本利用效率，显著降低多轮交互任务下的训练耗时并加速收敛。",
   },
   {
-    title: "全栈工程师",
-    org: "初创公司",
-    period: "2020 — 2023",
+    title: "基于 AReaL 的投机解码加速",
+    org: "AReaL, Rollout 算力资源优化, vLLM/SGLang, 投机解码",
+    period: "2025.10 — 2026.01",
     detail:
-      "从 0 到 1 搭建 B 端控制台与计费子系统，参与技术选型与代码评审文化建立。",
+      "降本增效策略落地：针对异步强化学习高并发性与长尾延迟的痛点，提出了基于投机解码的加速方案。在保证核心训练效果无损的前提下，将 Rollout 吞吐量提升 1.2-1.5 倍，降低了 Rollout 的算力成本。\n动态更新解决瓶颈：针对异步强化学习中草稿模型的滞后问题，设计了“基于自适应阈值的动态更新策略”，引入动态回退机制，保障了投机解码的接受率与训练结果的可用性。",
+  },
+  {
+    title: "大模型投机解码评测平台",
+    org: "多业务场景评测，投机解码，Spec-Bench 测评",
+    period: "2025.06 — 2025.10",
+    detail:
+      "算法部署与指标定义：构建标准化的投机解码性能评测平台，统一部署 EAGLE、Medusa 等前沿加速算法。面向数学推理、RAG、多轮对话等 6 大核心业务场景，定义端到端加速比、响应延迟等评估指标。\n数据赋能业务决策：基于多维度评测数据产出各算法的性能报告，为后续不同业务场景下的投机解码算法的选择、推理成本核算提供了坚实的数据支撑与决策依据。",
   },
 ];
 
 export const education: TimelineItem[] = [
   {
-    title: "计算机科学与技术 · 硕士",
-    org: "示例大学",
-    period: "2018 — 2020",
-    detail: "研究方向：分布式系统与一致性模型；课程项目涵盖存储引擎与共识算法实现。",
+    title: "电子信息 · 硕士研究生",
+    org: "复旦大学 — 计算与智能创新学院",
+    period: "2025.09 — 至今",
+    detail: "方向：大语言模型推理加速、强化学习及 Agent 架构。",
   },
   {
-    title: "软件工程 · 学士",
-    org: "示例大学",
-    period: "2014 — 2018",
-    detail: "ACM 校队成员；毕业设计为基于容器的服务编排演示平台。",
+    title: "通信工程 · 本科生",
+    org: "南京大学 — 电子科学与工程学院",
+    period: "2021.09 — 2025.06",
+    detail: "相关课程与基础学习。",
   },
 ];
 
 export const skills = {
-  languages: ["TypeScript", "Go", "Python", "Rust（学习中）"],
-  infra: ["Kubernetes", "Terraform", "PostgreSQL", "Redis"],
-  frontend: ["React", "Next.js", "Tailwind CSS", "WebGL（兴趣）"],
+  languages: ["Python", "C++", "TypeScript", "Shell"],
+  infra: ["vLLM", "SGLang", "Linux", "Docker"],
+  frontend: ["PyTorch", "Hugging Face", "RAGEN", "Agent"],
 };
 
 export const hobbies = [
@@ -217,11 +204,10 @@ export const lifeNotes = [
   "周末会刻意断网几小时：散步、做饭、或把书架上的纸书读完一章。",
 ];
 
-/** 顺序即滚动顺序：教育 → 项目 → 履历 → 生活 → 博客 */
+/** 顺序即滚动顺序：教育 → 履历 → 生活 → 博客 */
 export const navItems = [
   { id: "education", label: "教育" },
-  { id: "projects", label: "项目" },
-  { id: "resume", label: "履历" },
+  { id: "resume", label: "项目经历" },
   { id: "life", label: "生活与爱好" },
   { id: "blog", label: "博客" },
 ] as const;
