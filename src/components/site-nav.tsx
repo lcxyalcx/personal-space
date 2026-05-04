@@ -1,9 +1,8 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import { navItems, siteMeta } from "@/data/site";
-
-const mark = siteMeta.author.trim().charAt(0).toUpperCase() || "·";
 
 function useActiveNavId() {
   const [activeId, setActiveId] = useState<string | null>(null);
@@ -48,14 +47,17 @@ export function SiteNav() {
       <div className="mx-auto flex h-12 max-w-6xl items-center justify-between px-4 sm:h-[3.25rem] sm:px-6">
         <a
           href="#top"
+          aria-label={siteMeta.author}
           className="flex items-center gap-2 rounded-md text-[15px] font-semibold tracking-tight text-fg transition-opacity hover:opacity-70 focus-visible:ring-2 focus-visible:ring-[var(--link)] focus-visible:ring-offset-2"
         >
-          <span
-            className="flex h-7 w-7 items-center justify-center rounded-[10px] bg-fg text-[12px] font-semibold text-surface"
-            aria-hidden
-          >
-            {mark}
-          </span>
+          <Image
+            src="/author-avatar.jpg"
+            alt=""
+            width={28}
+            height={28}
+            className="h-7 w-7 shrink-0 rounded-[10px] object-cover shadow-sm ring-1 ring-black/[0.08]"
+            priority
+          />
           <span className="hidden sm:inline">{siteMeta.author}</span>
         </a>
         <nav className="flex max-w-[min(100%,22rem)] flex-wrap items-center justify-end gap-0.5 sm:max-w-none sm:gap-1">
