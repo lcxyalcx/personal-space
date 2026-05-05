@@ -39,17 +39,18 @@ export default async function BlogPostPage({ params }: Props) {
   };
 
   return (
-    <main className="mx-auto max-w-3xl px-4 pb-28 pt-20 sm:px-6 sm:pb-32 sm:pt-24">
-      <nav className="mb-10 text-sm">
-        <Link
-          href="/#blog"
-          className="font-medium text-link transition-colors hover:text-[var(--link-hover)]"
-        >
-          ← {c.backToBlog}
-        </Link>
-      </nav>
+    <main className="mx-auto max-w-3xl px-4 pb-20 pt-16 sm:px-6 sm:pb-28 sm:pt-20">
+      <div className="module-glass module-glass--alt px-5 py-10 sm:px-8 sm:py-12">
+        <nav className="mb-10 text-sm">
+          <Link
+            href="/#blog"
+            className="font-medium text-link transition-colors hover:text-[var(--link-hover)]"
+          >
+            ← {c.backToBlog}
+          </Link>
+        </nav>
 
-      <article>
+        <article>
         <header className="border-b border-[var(--border)] pb-8">
           <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-muted-2">
             <span className="inline-flex items-center gap-1">
@@ -93,7 +94,8 @@ export default async function BlogPostPage({ params }: Props) {
           <p className="mb-4 text-[15px] text-muted">{c.postFooterLike}</p>
           <LikeButton scope="post" href={canonicalHref} labels={likeLabels} size="md" />
         </footer>
-      </article>
+        </article>
+      </div>
     </main>
   );
 }

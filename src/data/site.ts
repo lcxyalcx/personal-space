@@ -30,10 +30,10 @@ export const siteMeta = {
 export const hero = {
   /** Apple「Hello」式开场：多行轮播，可增删语言 */
   greetings: ["你好。", "Hello.", "Bonjour.", "Hola."],
-  headline: "探索大模型与 Agent 的技术边界。",
+  headline: "Exploring the technical frontier of large language models and agents.",
   subline: "Hello，I am Jacob Liu， a postgraduate student at Fudan University interested in LLM inference acceleration, reinforcement learning, and Agent architecture.Please feel free to explore my projects and blog posts to learn more about my work and interests.",
   /** 首屏副标题下方的一行补充说明 */
-  statusLine: "复旦大学 · 电子信息研究生 · 计算与智能创新学院",
+  statusLine: " ",
 };
 
 export const social = {
@@ -131,38 +131,38 @@ export type TimelineItem = {
 
 export const experience: TimelineItem[] = [
   {
-    title: "Multi-turn AI Agent 强化学习评测与优化",
-    org: "多轮交互场景建模, Multi-turn RL",
+    title: "Multi-turn AI Agent 强化学习评测与优化 | Multi-turn Agent RL Optimization",
+    org: "多轮交互建模 / Multi-turn RL | Scenario Modeling",
     period: "2026.02 — 至今",
     detail:
-      "业务场景拆解与建模：基于 RAGEN 实现了 MetaMathQA (数学推理)、WebShop（多步规划）等经典 Agent 任务场景。通过任务成功率、轨迹多样性等指标，评估 Agent 在 Multi-turn 环境下的训练表现。\n优化方案探索：创新性提出利用相邻轮次有效特征指导当前轮决策的优化方案，通过建立跨轮次的知识传递与信息重用机制，提升 Rollout 阶段的样本利用效率，显著降低多轮交互任务下的训练耗时并加速收敛。",
+      "基于 RAGEN 构建多步规划等多轮 Agent 任务，并在多维度进行评估。提出跨轮次知识传递机制，提升 Rollout 阶段样本利用效率，显著降低训练耗时。\nBuilt multi-turn Agent tasks using RAGEN. Proposed a cross-turn knowledge transfer mechanism to improve sampling efficiency and significantly reduce training time.",
   },
   {
-    title: "基于 AReaL 的投机解码加速",
-    org: "AReaL, Rollout 算力资源优化, vLLM/SGLang, 投机解码",
+    title: "基于 AReaL 的投机解码加速 | Speculative Decoding upon AReaL",
+    org: "Rollout 算力优化 / 投机解码 | Computation Optimization",
     period: "2025.10 — 2026.01",
     detail:
-      "降本增效策略落地：针对异步强化学习高并发性与长尾延迟的痛点，提出了基于投机解码的加速方案。在保证核心训练效果无损的前提下，将 Rollout 吞吐量提升 1.2-1.5 倍，降低了 Rollout 的算力成本。\n动态更新解决瓶颈：针对异步强化学习中草稿模型的滞后问题，设计了“基于自适应阈值的动态更新策略”，引入动态回退机制，保障了投机解码的接受率与训练结果的可用性。",
+      "针对异步强化学习高并发痛点，提出投机解码加速方案，将 Rollout 吞吐量提升 1.2-1.5 倍。设计自适应阈值动态更新策略，保障接受率与训练稳定性。\nProposed a speculative decoding acceleration scheme for asynchronous RL, increasing Rollout throughput by 1.2-1.5x. Designed an adaptive update strategy to ensure stable acceptance rates.",
   },
   {
-    title: "大模型投机解码评测平台",
-    org: "多业务场景评测，投机解码，Spec-Bench 测评",
+    title: "大模型投机解码评测平台 | LLM Speculative Decoding Bench",
+    org: "多业务场景评测 / Spec-Bench | Algorithm Evaluation",
     period: "2025.06 — 2025.10",
     detail:
-      "算法部署与指标定义：构建标准化的投机解码性能评测平台，统一部署 EAGLE、Medusa 等前沿加速算法。面向数学推理、RAG、多轮对话等 6 大核心业务场景，定义端到端加速比、响应延迟等评估指标。\n数据赋能业务决策：基于多维度评测数据产出各算法的性能报告，为后续不同业务场景下的投机解码算法的选择、推理成本核算提供了坚实的数据支撑与决策依据。",
+      "构建标准化的投机解码评测平台，统一部署前沿加速算法，覆盖 6 大核心业务产出多维度数据报告，为推理成本与算法决策提供支撑。\nBuilt a standardized evaluation platform for speculative decoding algorithms, covering 6 core scenarios to provide solid data support for inference cost and algorithm selection.",
   },
 ];
 
 export const education: TimelineItem[] = [
   {
-    title: "电子信息 · 硕士研究生",
-    org: "复旦大学 — 计算与智能创新学院",
+    title: "电子信息 · 硕士研究生 | M.S. in Electronic Information",
+    org: "复旦大学 — 计算与智能创新学院 | Fudan University",
     period: "2025.09 — 至今",
-    detail: "方向：大语言模型推理加速、强化学习及 Agent 架构。",
+    detail: "方向：大语言模型推理加速、强化学习及 Agent 架构。\nResearch Insights: LLM Inference Acceleration, Reinforcement Learning, and Agent Architecture.",
   },
   {
-    title: "通信工程 · 本科生",
-    org: "南京大学 — 电子科学与工程学院",
+    title: "通信工程 · 本科生 | B.S. in Communication Engineering",
+    org: "南京大学 — 电子科学与工程学院 | Nanjing University",
     period: "2021.09 — 2025.06",
     detail: " ",
   },

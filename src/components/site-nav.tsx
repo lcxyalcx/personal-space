@@ -6,13 +6,11 @@ import { useEffect, useState } from "react";
 import { navItems, siteMeta } from "@/data/site";
 
 function useActiveNavId(isHome: boolean) {
-  const [activeId, setActiveId] = useState<string | null>(null);
+  const [scrollActiveId, setScrollActiveId] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!isHome) {
-      setActiveId(null);
-      return;
-    }
+    if (!isHome) return;
+
     const ids = navItems.map((n) => n.id);
 
     const update = () => {
@@ -29,7 +27,7 @@ function useActiveNavId(isHome: boolean) {
       for (const row of tops) {
         if (y >= row.top) current = row.id;
       }
-      setActiveId(current);
+      setScrollActiveId(current);
     };
 
     update();
@@ -41,7 +39,7 @@ function useActiveNavId(isHome: boolean) {
     };
   }, [isHome]);
 
-  return activeId;
+  return isHome ? scrollActiveId : null;
 }
 
 export function SiteNav() {
@@ -51,7 +49,7 @@ export function SiteNav() {
   const hashBase = isHome ? "" : "/";
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 border-b border-[var(--border)] bg-[color-mix(in_oklab,var(--surface)_82%,transparent)] backdrop-blur-xl backdrop-saturate-150">
+    <header className="fixed inset-x-0 top-0 z-50 border-b border-[color-mix(in_oklab,var(--border)_70%,transparent)] bg-[color-mix(in_oklab,var(--surface)_78%,transparent)] shadow-[var(--nav-elev-shadow)] backdrop-blur-xl backdrop-saturate-[1.35]">
       <div className="mx-auto flex h-12 max-w-6xl items-center justify-between px-4 sm:h-[3.25rem] sm:px-6">
         <a
           href={`${hashBase}#top`}
@@ -77,8 +75,8 @@ export function SiteNav() {
                 href={`${hashBase}#${item.id}`}
                 className={`rounded-full px-2.5 py-1.5 text-[13px] transition-[color,background,box-shadow] duration-200 focus-visible:ring-2 focus-visible:ring-[var(--link)] focus-visible:ring-offset-2 sm:px-3 ${
                   active
-                    ? "bg-black/[0.07] font-medium text-fg shadow-[inset_0_1px_0_rgba(255,255,255,0.6)]"
-                    : "text-muted hover:bg-black/[0.04] hover:text-fg"
+                    ? "bg-[color-mix(in_oklab,var(--primary)_10%,transparent)] font-medium text-fg shadow-[inset_0_1px_0_rgba(255,255,255,0.65)] ring-1 ring-[color-mix(in_oklab,var(--primary)_22%,transparent)]"
+                    : "text-muted hover:bg-[color-mix(in_oklab,var(--primary)_6%,transparent)] hover:text-fg"
                 }`}
               >
                 {item.label}

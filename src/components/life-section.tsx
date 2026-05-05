@@ -11,8 +11,8 @@ export function LifeSection() {
   const c = sectionCopy.life;
 
   return (
-    <section id="life" className="scroll-mt-16 bg-bg px-4 py-24 sm:px-6 sm:py-32">
-      <div className="mx-auto max-w-6xl">
+    <section id="life" className="scroll-mt-16 bg-bg px-4 py-14 sm:px-6 sm:py-20">
+      <div className="module-glass mx-auto max-w-6xl px-5 py-12 sm:px-8 sm:py-16">
         <SectionHeading eyebrow={c.eyebrow} title={c.title} hint={c.hint} />
         <div className="grid gap-10 lg:grid-cols-2 lg:gap-14">
           <div>
@@ -46,8 +46,8 @@ export function LifeSection() {
                   }}
                 >
                   <motion.div
-                    className="card-shine group relative overflow-hidden rounded-2xl border border-[var(--border)] bg-surface p-6 shadow-sm sm:p-7"
-                    whileHover={{ y: -4, boxShadow: "0 18px 36px -20px rgba(0,0,0,0.12)" }}
+                    className="card-shine group relative overflow-hidden rounded-3xl border border-[var(--border)] bg-surface p-6 shadow-[var(--elevation-1)] sm:p-7"
+                    whileHover={{ y: -4, boxShadow: "var(--elevation-hover)" }}
                     transition={spring}
                   >
                     <h4 className="text-[17px] font-semibold text-fg">{h.title}</h4>
@@ -86,7 +86,7 @@ export function LifeSection() {
                     hidden: { opacity: 0, x: 14 },
                     show: { opacity: 1, x: 0, transition: spring },
                   }}
-                  className="border-l-2 border-[#d2d2d7] pl-5 text-[17px] leading-relaxed text-muted"
+                  className="border-l-2 border-[var(--timeline-line)] pl-5 text-[17px] leading-relaxed text-muted"
                 >
                   {line}
                 </motion.li>

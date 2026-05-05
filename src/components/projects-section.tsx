@@ -10,8 +10,8 @@ const spring = { type: "spring" as const, stiffness: 400, damping: 30 };
 export function ProjectsSection() {
   const c = sectionCopy.projects;
   return (
-    <section id="projects" className="scroll-mt-16 bg-bg px-4 py-24 sm:px-6 sm:py-32">
-      <div className="mx-auto max-w-6xl">
+    <section id="projects" className="scroll-mt-16 bg-bg px-4 py-14 sm:px-6 sm:py-20">
+      <div className="module-glass mx-auto max-w-6xl px-5 py-12 sm:px-8 sm:py-16">
         <SectionHeading eyebrow={c.eyebrow} title={c.title} hint={c.hint} />
         <motion.ul
           className="grid gap-5 [perspective:1200px] md:grid-cols-2 md:gap-6"
@@ -37,7 +37,7 @@ export function ProjectsSection() {
               }}
             >
               <motion.article
-                className="card-shine group relative flex h-full flex-col overflow-hidden rounded-2xl border border-[var(--border)] bg-surface p-6 shadow-sm sm:p-8"
+                className="card-shine group relative flex h-full flex-col overflow-hidden rounded-3xl border border-[var(--border)] bg-surface p-6 shadow-[var(--elevation-1)] sm:p-8"
                 whileHover={{
                   y: -6,
                   rotateX: 2,

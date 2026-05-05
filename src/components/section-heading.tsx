@@ -36,7 +36,7 @@ export function SectionHeading({ eyebrow, title, hint }: Props) {
     >
       <motion.p
         variants={item}
-        className="text-xs font-semibold uppercase tracking-[0.16em] text-muted-2"
+        className="text-xs font-semibold uppercase tracking-[0.16em] text-[color-mix(in_oklab,var(--primary)_38%,var(--muted-2))]"
       >
         {eyebrow}
       </motion.p>

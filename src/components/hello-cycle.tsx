@@ -2,20 +2,18 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
+import { CHROMA_PALETTES } from "@/data/chroma-palettes";
 import { hero } from "@/data/site";
-
-/** 与全局暖石配色一致：低饱和炭灰、青铜、暖灰 — 类似 Apple Hello 的克制渐变字 */
-const HELLO_GRADIENTS = [
-  "linear-gradient(118deg, #1c1b19 6%, #6b5d4c 38%, #9a7b52 58%, #3d3a36 92%)",
-  "linear-gradient(122deg, #4a433c 0%, #1c1b19 42%, #7d6a56 72%, #2a2826 100%)",
-  "linear-gradient(120deg, #1c1b19 10%, #5c5348 45%, #b89a72 62%, #1c1b19 95%)",
-  "linear-gradient(124deg, #6e6256 0%, #2a2623 35%, #8a735c 55%, #1c1b19 88%)",
-];
 
 /** Apple 式：偏长的停留、慢进慢出、几乎不用缩放与强模糊 */
 const easeApple = [0.25, 0.1, 0.25, 1] as const;
 
-export function HelloCycle() {
+type Props = {
+  /** 与 hero 色彩条带同步：每换一句「你好」切换一套渐变 */
+  onChromaIndexChange?: (index: number) => void;
+};
+
+export function HelloCycle({ onChromaIndexChange }: Props) {
   const lines = hero.greetings;
   const [i, setI] = useState(0);
 
@@ -26,7 +24,12 @@ export function HelloCycle() {
     return () => clearInterval(t);
   }, [lines.length]);
 
-  const bg = HELLO_GRADIENTS[i % HELLO_GRADIENTS.length];
+  const chromaIdx = i % CHROMA_PALETTES.length;
+  const bg = CHROMA_PALETTES[chromaIdx]!.hello;
+
+  useEffect(() => {
+    onChromaIndexChange?.(chromaIdx);
+  }, [chromaIdx, onChromaIndexChange]);
 
   return (
     <div className="hello-stage mb-3 min-h-[1.2em] overflow-visible pb-0.5 sm:mb-5">
@@ -44,11 +47,12 @@ export function HelloCycle() {
           transition={{ duration: 0.72, ease: easeApple }}
           className="hello-line text-center text-[clamp(2.85rem,11vw,5.75rem)] font-semibold leading-[1.08] tracking-[-0.03em] sm:text-left"
           style={{
-            background: bg,
+            backgroundImage: bg,
+            backgroundSize: "100% 100%",
+            backgroundRepeat: "no-repeat",
             WebkitBackgroundClip: "text",
             backgroundClip: "text",
             color: "transparent",
-            backgroundSize: "165% 100%",
             fontFeatureSettings: '"ss01"',
           }}
         >

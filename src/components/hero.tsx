@@ -1,8 +1,10 @@
 "use client";
 
 import { Binary, Blocks, Bolt, Brackets, BrainCircuit, FolderGit2, Mail, UsersRound, X } from "lucide-react";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion, useScroll, useSpring, useTransform } from "framer-motion";
+import { useCallback, useRef, useState } from "react";
 import { HelloCycle } from "@/components/hello-cycle";
+import { CHROMA_PALETTES } from "@/data/chroma-palettes";
 import { hero, siteMeta, social } from "@/data/site";
 
 const socialConfig = [
@@ -43,8 +45,25 @@ const techStrip = [
 const spring = { type: "spring" as const, stiffness: 380, damping: 28 };
 
 export function Hero() {
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const [chromaIdx, setChromaIdx] = useState(0);
+  const onChromaIndexChange = useCallback((ix: number) => setChromaIdx(ix), []);
+  const chroma = CHROMA_PALETTES[chromaIdx % CHROMA_PALETTES.length]!;
+  const reduce = useReducedMotion();
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end start"],
+  });
+  const scrollEase = useSpring(scrollYProgress, {
+    stiffness: reduce ? 520 : 78,
+    damping: reduce ? 520 : 26,
+    mass: reduce ? 0.08 : 0.42,
+  });
+  const contentY = useTransform(scrollEase, [0, 1], [0, reduce ? 0 : 56]);
+
   return (
     <section
+      ref={sectionRef}
       id="top"
       className="relative flex min-h-[92vh] flex-col justify-center overflow-x-hidden px-4 pb-28 pt-24 sm:px-6"
     >
@@ -52,23 +71,37 @@ export function Hero() {
       <div className="hero-mesh pointer-events-none absolute inset-0" aria-hidden />
       <div className="hero-scan pointer-events-none absolute inset-0" aria-hidden />
       <motion.div
-        className="pointer-events-none absolute -right-24 top-1/4 h-80 w-80 rounded-full bg-[radial-gradient(circle_at_30%_30%,rgba(138,109,72,0.2),transparent_65%)] blur-2xl"
+        className="pointer-events-none absolute -right-24 top-1/4 h-80 w-80 rounded-full bg-[radial-gradient(circle_at_30%_30%,color-mix(in_oklab,var(--primary)_22%,transparent),transparent_65%)] blur-2xl"
         aria-hidden
         animate={{ y: [0, -18, 0], x: [0, 10, 0] }}
         transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
       />
       <motion.div
-        className="pointer-events-none absolute -left-16 bottom-1/4 h-64 w-64 rounded-full bg-[radial-gradient(circle_at_70%_70%,rgba(92,84,74,0.14),transparent_60%)] blur-2xl"
+        className="pointer-events-none absolute -left-16 bottom-1/4 h-64 w-64 rounded-full bg-[radial-gradient(circle_at_70%_70%,rgba(99,102,241,0.14),transparent_60%)] blur-2xl"
         aria-hidden
         animate={{ y: [0, 14, 0], x: [0, -8, 0] }}
         transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
       />
 
-      <div className="relative mx-auto w-full max-w-6xl">
-        <HelloCycle />
+      <motion.div
+        className="module-glass--hero relative mx-auto w-full max-w-6xl px-5 py-9 sm:px-8 sm:py-11"
+        style={{ y: contentY }}
+      >
+        <HelloCycle onChromaIndexChange={onChromaIndexChange} />
+
+        <div
+          aria-hidden
+          className="hello-chroma-strip mx-auto mb-5 mt-1 h-1.5 max-w-[min(20rem,92vw)] rounded-full shadow-[0_2px_12px_rgba(0,0,0,0.08)] ring-1 ring-black/[0.06] sm:mx-0"
+          style={{
+            backgroundImage: chroma.hello,
+            backgroundSize: "100% 100%",
+            backgroundRepeat: "no-repeat",
+          }}
+        />
 
         <motion.p
-          className="text-center text-xs font-semibold uppercase tracking-[0.2em] text-muted-2 sm:text-left"
+          className="text-center text-xs font-semibold uppercase tracking-[0.2em] sm:text-left"
+          style={{ color: chroma.caption }}
           initial={false}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ ...spring, delay: 0.05 }}
@@ -76,7 +109,7 @@ export function Hero() {
           {siteMeta.author}
         </motion.p>
         <motion.h1
-          className="headline-gradient headline-drift relative mt-4 text-center text-[clamp(2.1rem,6.5vw,4.75rem)] font-semibold leading-[1.06] tracking-tight sm:text-left md:text-[clamp(2.75rem,5.2vw,4.85rem)] lg:text-[5rem]"
+          className="headline-gradient relative mt-4 max-w-full overflow-x-auto text-center text-lg font-semibold leading-snug tracking-tight whitespace-nowrap sm:text-left md:text-xl"
           initial={false}
           animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
           transition={{ duration: 0.85, ease: "easeOut", delay: 0.14 }}
@@ -110,13 +143,20 @@ export function Hero() {
           {techStrip.map(({ Icon, label }, i) => (
             <motion.span
               key={label}
-              className="inline-flex items-center gap-1.5 rounded-full border border-[var(--border)] bg-surface/90 px-3 py-1.5 text-[11px] font-medium uppercase tracking-wider text-muted shadow-sm backdrop-blur-sm"
+              className="inline-flex items-center gap-1.5 rounded-full border border-[var(--border)] bg-[color-mix(in_oklab,var(--surface)_92%,transparent)] px-3 py-1.5 text-[11px] font-medium uppercase tracking-wider text-muted shadow-[var(--elevation-1)] ring-1 ring-[var(--chip-ring)] backdrop-blur-sm"
               initial={false}
               animate={{ opacity: 1, y: 0 }}
               transition={{ ...spring, delay: 0.36 + i * 0.05 }}
-              whileHover={{ y: -2, borderColor: "rgba(0,102,204,0.25)" }}
+              whileHover={
+                reduce
+                  ? { y: -2 }
+                  : {
+                      y: -2,
+                      borderColor: "color-mix(in oklab, var(--primary) 32%, transparent)",
+                    }
+              }
             >
-              <Icon className="h-3.5 w-3.5 text-accent" strokeWidth={1.75} />
+              <Icon className="h-3.5 w-3.5 shrink-0 text-muted-2" strokeWidth={1.75} />
               {label}
             </motion.span>
           ))}
@@ -156,7 +196,7 @@ export function Hero() {
             ))}
           </motion.ul>
         ) : null}
-      </div>
+      </motion.div>
     </section>
   );
 }

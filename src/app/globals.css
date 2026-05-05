@@ -1,24 +1,35 @@
 @import "tailwindcss";
 
-/* 暖石纸面 + 炭灰字 + 青铜强调：编辑风 / 高级感 */
+/*
+ * 视觉基调：参考 leleo.top / Vuetify Material 浅色个人站
+ * — 冷灰页面底、白卡片、蓝主色、清晰 elevation（与开源模板 leleo-home-page 气质一致）
+ */
 :root {
-  --bg: #f5f3ef;
-  --bg-alt: #ebe8e1;
-  --fg: #1c1b19;
-  --muted: #5c5955;
-  --muted-2: #7a7670;
-  --link: #5c4a38;
-  --link-hover: #3d2f22;
-  --accent: #8a6d48;
-  --accent-soft: rgba(138, 109, 72, 0.14);
-  --border: rgba(28, 27, 25, 0.08);
-  --border-strong: rgba(28, 27, 25, 0.13);
-  --surface: #fdfcfa;
-  --footer-bg: #141312;
-  --footer-fg: #f0ede8;
-  --footer-muted: #9c9890;
+  --bg: #f4f6fa;
+  --bg-alt: #e9edf5;
+  --fg: #1e1f24;
+  --muted: #5c5f66;
+  --muted-2: #7b8089;
+  --primary: #1a73e8;
+  --primary-dark: #155fbc;
+  --link: #1565c0;
+  --link-hover: #0d47a1;
+  --accent: #1a73e8;
+  --accent-soft: color-mix(in oklab, var(--primary) 16%, transparent);
+  --border: rgba(30, 36, 48, 0.09);
+  --border-strong: rgba(30, 36, 48, 0.14);
+  --surface: #ffffff;
+  --footer-bg: #1a1d24;
+  --footer-fg: #eceff4;
+  --footer-muted: #9aa3b2;
   --background: var(--bg);
   --foreground: var(--fg);
+  --glass-surface: color-mix(in oklab, var(--surface) 88%, transparent);
+  --nav-elev-shadow: 0 8px 32px -12px rgba(24, 32, 48, 0.18);
+  --chip-ring: rgba(26, 115, 232, 0.12);
+  --elevation-1: 0 1px 2px rgba(24, 32, 48, 0.06), 0 2px 10px rgba(24, 32, 48, 0.06);
+  --elevation-hover: 0 10px 28px -10px rgba(24, 32, 48, 0.14), 0 4px 14px rgba(26, 115, 232, 0.08);
+  --timeline-line: #c5cbd6;
 }
 
 @theme inline {
@@ -34,8 +45,8 @@
   --color-footer-fg: var(--footer-fg);
   --color-footer-muted: var(--footer-muted);
   --font-sans:
-    -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display",
-    "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Segoe UI", sans-serif;
+    var(--font-dm-sans), ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
 }
 
 html {
@@ -48,31 +59,223 @@ body {
   font-family: var(--font-sans);
 }
 
+/* 各区块毛玻璃容器（叠在 bg / bg-alt 之上） */
+.module-glass {
+  border-radius: 1.75rem;
+  background: color-mix(in oklab, var(--surface) 58%, transparent);
+  border: 1px solid color-mix(in oklab, #fff 72%, var(--border-strong));
+  box-shadow: var(--elevation-1);
+  backdrop-filter: blur(22px) saturate(1.28);
+  -webkit-backdrop-filter: blur(22px) saturate(1.28);
+}
+
+.module-glass--alt {
+  background: color-mix(in oklab, var(--surface) 52%, var(--bg-alt) 48%);
+  border-color: color-mix(in oklab, #fff 55%, var(--border-strong));
+}
+
+.module-glass--hero {
+  border-radius: 1.5rem;
+  background: color-mix(in oklab, var(--surface) 48%, transparent);
+  border: 1px solid color-mix(in oklab, #fff 65%, var(--border-strong));
+  box-shadow: var(--elevation-1);
+  backdrop-filter: blur(18px) saturate(1.22);
+  -webkit-backdrop-filter: blur(18px) saturate(1.22);
+}
+
+.module-glass--footer {
+  border-radius: 1rem;
+  background: color-mix(in oklab, var(--footer-bg) 72%, transparent);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(16px) saturate(1.15);
+  -webkit-backdrop-filter: blur(16px) saturate(1.15);
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .module-glass,
+  .module-glass--alt,
+  .module-glass--hero,
+  .module-glass--footer {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+}
+
+/* 全站环境层：暖色纸面 + 轻科技网格与漂移光晕（在正文 z-10 之下） */
+.site-ambient {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.site-ambient__grid {
+  position: absolute;
+  inset: -20%;
+  background-image:
+    linear-gradient(rgba(36, 44, 58, 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(36, 44, 58, 0.055) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse 75% 65% at 50% 42%, black 0%, transparent 72%);
+  opacity: 0.85;
+  animation: site-ambient-grid-pan 90s linear infinite;
+}
+
+.site-ambient__orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(72px);
+  mix-blend-mode: multiply;
+  opacity: 0.55;
+}
+
+.site-ambient__orb--a {
+  width: min(52vw, 520px);
+  height: min(52vw, 520px);
+  top: -12%;
+  right: -8%;
+  background: radial-gradient(
+    circle at 40% 40%,
+    color-mix(in oklab, var(--primary) 34%, transparent),
+    transparent 68%
+  );
+  animation: site-ambient-float-a 36s ease-in-out infinite;
+}
+
+.site-ambient__orb--b {
+  width: min(48vw, 480px);
+  height: min(48vw, 480px);
+  bottom: -18%;
+  left: -14%;
+  background: radial-gradient(
+    circle at 55% 45%,
+    rgba(99, 102, 241, 0.16),
+    transparent 70%
+  );
+  animation: site-ambient-float-b 44s ease-in-out infinite;
+}
+
+.site-ambient__orb--c {
+  width: min(36vw, 360px);
+  height: min(36vw, 360px);
+  top: 38%;
+  left: 50%;
+  translate: -50% 0;
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(52, 64, 88, 0.1),
+    transparent 65%
+  );
+  mix-blend-mode: normal;
+  opacity: 0.9;
+  animation: site-ambient-float-c 52s ease-in-out infinite;
+}
+
+.site-ambient__sheen {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    118deg,
+    transparent 36%,
+    color-mix(in oklab, #fff 16%, transparent) 48%,
+    transparent 58%
+  );
+  background-size: 220% 220%;
+  opacity: 0.35;
+  animation: site-ambient-sheen 28s ease-in-out infinite;
+}
+
+.site-ambient__vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse 85% 70% at 50% 45%,
+    transparent 40%,
+    color-mix(in oklab, var(--bg) 55%, transparent) 100%
+  );
+  opacity: 0.65;
+}
+
+@keyframes site-ambient-grid-pan {
+  0% {
+    transform: translate(0, 0);
+  }
+
+  100% {
+    transform: translate(56px, 56px);
+  }
+}
+
+@keyframes site-ambient-float-a {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  50% {
+    transform: translate(-4%, 3%) scale(1.06);
+  }
+}
+
+@keyframes site-ambient-float-b {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  50% {
+    transform: translate(5%, -4%) scale(1.05);
+  }
+}
+
+@keyframes site-ambient-float-c {
+  0%,
+  100% {
+    transform: translate(-50%, 0) scale(1);
+  }
+
+  45% {
+    transform: translate(-48%, -2%) scale(1.04);
+  }
+}
+
+@keyframes site-ambient-sheen {
+  0%,
+  100% {
+    background-position: 0% 40%;
+  }
+
+  50% {
+    background-position: 100% 55%;
+  }
+}
+
 ::selection {
-  background: color-mix(in oklab, var(--accent) 28%, transparent);
+  background: color-mix(in oklab, var(--primary) 26%, transparent);
   color: var(--fg);
 }
 
-/* 首屏柔光：青铜与暖灰晕 */
+/* 首屏柔光：偏 Material 冷灰 + 淡蓝 */
 .hero-glow {
   background:
     radial-gradient(
       ellipse 100% 82% at 50% -18%,
-      rgba(138, 109, 72, 0.09),
-      transparent 56%
+      color-mix(in oklab, var(--primary) 12%, transparent),
+      transparent 58%
     ),
     radial-gradient(
       ellipse 58% 48% at 96% 4%,
-      rgba(92, 84, 74, 0.06),
+      rgba(99, 102, 241, 0.06),
       transparent 52%
     );
 }
 
-/* 细网格：中性炭线 */
+/* 细网格 */
 .hero-mesh {
   background-image:
-    linear-gradient(rgba(28, 27, 25, 0.045) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(28, 27, 25, 0.045) 1px, transparent 1px);
+    linear-gradient(rgba(36, 44, 58, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(36, 44, 58, 0.05) 1px, transparent 1px);
   background-size: 44px 44px;
   mask-image: radial-gradient(ellipse 85% 75% at 50% 42%, black 12%, transparent 72%);
   opacity: 0.88;
@@ -83,8 +286,8 @@ body {
     0deg,
     transparent,
     transparent 3px,
-    rgba(28, 27, 25, 0.014) 3px,
-    rgba(28, 27, 25, 0.014) 4px
+    rgba(36, 44, 58, 0.05) 3px,
+    rgba(36, 44, 58, 0.05) 4px
   );
   mask-image: radial-gradient(ellipse 90% 70% at 50% 45%, black 25%, transparent 75%);
   animation: hero-scan-drift 20s linear infinite;
@@ -100,7 +303,7 @@ body {
 }
 
 .headline-gradient {
-  background: linear-gradient(180deg, #1c1b19 0%, #45413c 100%);
+  background: linear-gradient(180deg, #1a1d24 0%, #3d4556 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -109,12 +312,12 @@ body {
 .headline-gradient.headline-drift {
   background: linear-gradient(
     118deg,
-    #1c1b19 0%,
-    #4a433c 18%,
-    #8a6d48 40%,
-    #3d3834 58%,
-    #1c1b19 80%,
-    #2c2926 100%
+    #1a1d24 0%,
+    #2f3a4d 18%,
+    #1a73e8 38%,
+    #334155 56%,
+    #1a1d24 78%,
+    #252830 100%
   );
   background-size: 260% 260%;
   animation:
@@ -150,7 +353,7 @@ body::before {
   position: fixed;
   inset: 0;
   z-index: 1;
-  opacity: 0.038;
+  opacity: 0.042;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   background-size: 180px 180px;
 }
@@ -176,11 +379,12 @@ body::before {
 }
 
 /* ========== 自定义指针（/public/custom-cursor.js + pointer: fine）========== */
+/* 须高于 Dify 等第三方嵌入浮层，否则圆点/环会被挡住 */
 #custom-cursor-portal {
   position: fixed;
   inset: 0;
   pointer-events: none;
-  z-index: 10050;
+  z-index: 2147483647;
 }
 
 html.cc-enabled,
@@ -197,7 +401,7 @@ html.cc-enabled * {
   border-radius: 50%;
   background: var(--fg);
   pointer-events: none;
-  z-index: 10052;
+  z-index: 2147483647;
   will-change: transform;
   transform: translate3d(0, 0, 0) translate(-50%, -50%);
   transition: opacity 0.32s cubic-bezier(0.25, 0.1, 0.25, 1);
@@ -213,7 +417,7 @@ html.cc-enabled * {
   top: 0;
   width: 0;
   height: 0;
-  z-index: 10051;
+  z-index: 2147483647;
   pointer-events: none;
   will-change: transform;
 }
@@ -270,7 +474,7 @@ html.cc-enabled * {
 
   .headline-gradient.headline-drift {
     animation: none;
-    background: linear-gradient(180deg, #1c1b19 0%, #45413c 100%);
+    background: linear-gradient(180deg, #1a1d24 0%, #3d4556 100%);
     background-size: 100% 100%;
     letter-spacing: normal;
     filter: none;
@@ -281,6 +485,186 @@ html.cc-enabled * {
   }
 
   .hero-scan {
+    animation: none;
+  }
+
+  .site-ambient__grid,
+  .site-ambient__orb,
+  .site-ambient__sheen {
+    animation: none !important;
+  }
+
+  .site-ambient__orb--a {
+    transform: none;
+  }
+
+  .site-ambient__orb--b {
+    transform: none;
+  }
+
+  .site-ambient__orb--c {
+    transform: translate(-50%, 0);
+  }
+
+  .site-ambient__sheen {
+    background-position: 50% 50%;
+  }
+}
+
+/* Dify 嵌入：与 iframe 内联定位共用变量，保证气泡与窗口对齐 */
+:root {
+  --dify-chatbot-bubble-button-right: max(1rem, env(safe-area-inset-right, 0px));
+  --dify-chatbot-bubble-button-bottom: max(1.35rem, env(safe-area-inset-bottom, 0px));
+  --dify-bubble-size: 48px;
+}
+
+/* 聊天气泡左侧「Talk to me」提示（pointer-events: none，不挡点击） */
+.dify-chat-cue {
+  pointer-events: none;
+  position: fixed;
+  z-index: 2147483646;
+  right: calc(var(--dify-chatbot-bubble-button-right) + var(--dify-bubble-size) + 12px);
+  bottom: calc(var(--dify-chatbot-bubble-button-bottom) + 2px);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  text-align: right;
+  animation: dify-chat-cue-in 0.55s cubic-bezier(0.22, 1, 0.36, 1) both 0.15s;
+}
+
+.dify-chat-cue__pill {
+  padding: 0.45rem 0.65rem 0.5rem;
+  border-radius: 9999px;
+  background: var(--glass-surface);
+  border: 1px solid color-mix(in oklab, var(--border-strong) 85%, transparent);
+  box-shadow:
+    var(--nav-elev-shadow),
+    inset 0 1px 0 rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(14px) saturate(1.2);
+}
+
+.dify-chat-cue__en {
+  display: block;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted-2);
+  line-height: 1.35;
+}
+
+.dify-chat-cue__zh {
+  display: block;
+  margin-top: 1px;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  line-height: 1.3;
+  opacity: 0.92;
+}
+
+@keyframes dify-chat-cue-in {
+  from {
+    opacity: 0;
+    transform: translate3d(10px, 0, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@media (max-width: 520px) {
+  .dify-chat-cue__zh {
+    display: none;
+  }
+
+  .dify-chat-cue {
+    right: calc(var(--dify-chatbot-bubble-button-right) + var(--dify-bubble-size) + 8px);
+  }
+
+  .dify-chat-cue__pill {
+    padding: 0.35rem 0.55rem;
+  }
+}
+
+@media (max-width: 380px) {
+  .dify-chat-cue {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dify-chat-cue {
+    animation: none;
+  }
+}
+
+/* udify 默认 position:absolute，长页面底部打开时易相对文档错位；强制贴视口 */
+#dify-chatbot-bubble-button,
+#dify-chatbot-bubble-window {
+  position: fixed !important;
+}
+
+/* Dify 嵌入聊天：气泡反馈 + 窗口尺寸与层级（与 udify.app/embed 配套） */
+#dify-chatbot-bubble-button {
+  background-color: #1c64f2 !important;
+  transition:
+    transform 0.32s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.32s ease;
+  box-shadow: 0 12px 32px -10px rgba(28, 100, 242, 0.5);
+}
+
+#dify-chatbot-bubble-button:hover {
+  transform: scale(1.06);
+  box-shadow: 0 16px 40px -12px rgba(28, 100, 242, 0.55);
+}
+
+#dify-chatbot-bubble-button:active {
+  transform: scale(0.94);
+  transition-duration: 0.12s;
+}
+
+#dify-chatbot-bubble-window {
+  width: min(24rem, calc(100vw - 1.5rem)) !important;
+  height: min(42rem, calc(100dvh - 7.25rem)) !important;
+  max-height: calc(100dvh - 7.25rem) !important;
+  border-radius: 1rem !important;
+  box-shadow:
+    0 28px 64px -20px rgba(0, 0, 0, 0.35),
+    0 0 0 1px rgba(255, 255, 255, 0.06) inset !important;
+  transform-origin: bottom right !important;
+}
+
+#dify-chatbot-bubble-window.dify-window-open {
+  animation: dify-window-enter 0.42s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes dify-window-enter {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 16px, 0) scale(0.96);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #dify-chatbot-bubble-button {
+    transition: none;
+  }
+
+  #dify-chatbot-bubble-button:hover,
+  #dify-chatbot-bubble-button:active {
+    transform: none;
+  }
+
+  #dify-chatbot-bubble-window.dify-window-open {
     animation: none;
   }
 }

@@ -45,6 +45,9 @@
     for (var i = 0; i < list.length; i++) {
       var el = list[i];
       if (!el || el === root || root.contains(el)) continue;
+      if (el.closest && el.closest("[id^='dify-chatbot']")) {
+        return true;
+      }
       if (
         el.closest(
           "a[href], button, [role='button'], input, select, textarea, img, summary, label[for], [data-cursor-hover]",

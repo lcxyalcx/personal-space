@@ -19,11 +19,11 @@ export function ResumeSection() {
   }));
 
   return (
-    <section id="resume" className="scroll-mt-16 bg-bg-alt px-4 py-24 sm:px-6 sm:py-32">
-      <div className="mx-auto max-w-6xl">
+    <section id="resume" className="scroll-mt-16 bg-bg-alt px-4 py-14 sm:px-6 sm:py-20">
+      <div className="module-glass module-glass--alt mx-auto max-w-6xl px-5 py-12 sm:px-8 sm:py-16">
         <SectionHeading eyebrow={c.eyebrow} title={c.title} hint={c.hint} />
 
-        <ol className="relative mx-auto max-w-3xl space-y-0 border-l border-[#d2d2d7] pl-8 sm:pl-10">
+        <ol className="relative mx-auto max-w-3xl space-y-0 border-l border-[var(--timeline-line)] pl-8 sm:pl-10">
           {experience.map((item, i) => (
             <motion.li
               key={`${item.title}-${i}`}
@@ -35,8 +35,8 @@ export function ResumeSection() {
             >
               <span className="absolute -left-[5px] top-2 h-2.5 w-2.5 rounded-full border-2 border-surface bg-muted-2 ring-2 ring-bg-alt" />
               <motion.div
-                className="card-shine group relative overflow-hidden rounded-2xl border border-[var(--border)] bg-surface p-6 shadow-sm sm:p-8"
-                whileHover={{ y: -4, boxShadow: "0 20px 40px -24px rgba(0,0,0,0.14)" }}
+                className="card-shine group relative overflow-hidden rounded-3xl border border-[var(--border)] bg-surface p-6 shadow-[var(--elevation-1)] sm:p-8"
+                whileHover={{ y: -4, boxShadow: "var(--elevation-hover)" }}
                 transition={spring}
               >
                 <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between">
@@ -58,7 +58,9 @@ export function ResumeSection() {
             transition={{ ...spring, delay: 0.05 }}
             className="text-center sm:text-left"
           >
-            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-muted-2">{sk.eyebrow}</p>
+            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[color-mix(in_oklab,var(--primary)_38%,var(--muted-2))]">
+              {sk.eyebrow}
+            </p>
             <h3 className="mt-2 text-2xl font-semibold tracking-tight text-fg sm:text-3xl">{sk.title}</h3>
           </motion.div>
           <motion.div
@@ -78,7 +80,7 @@ export function ResumeSection() {
                   hidden: { opacity: 0, y: 24 },
                   show: { opacity: 1, y: 0, transition: spring },
                 }}
-                className="rounded-2xl border border-[var(--border)] bg-surface p-6 shadow-sm sm:p-7"
+                className="rounded-3xl border border-[var(--border)] bg-surface p-6 shadow-[var(--elevation-1)] sm:p-7"
                 whileHover={{ y: -5, scale: 1.02 }}
                 transition={spring}
               >

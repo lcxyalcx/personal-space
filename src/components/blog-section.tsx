@@ -44,11 +44,13 @@ export function BlogSection() {
   };
 
   return (
-    <section id="blog" className="scroll-mt-16 bg-bg-alt px-4 py-24 sm:px-6 sm:py-32">
-      <div className="mx-auto max-w-6xl">
+    <section id="blog" className="scroll-mt-16 bg-bg-alt px-4 py-14 sm:px-6 sm:py-20">
+      <div className="module-glass module-glass--alt mx-auto max-w-6xl px-5 py-12 sm:px-8 sm:py-16">
         <div className="mb-12 flex flex-col gap-6 sm:mb-16 sm:flex-row sm:items-end sm:justify-between">
           <div className="text-center sm:text-left">
-            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-muted-2">{c.eyebrow}</p>
+            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[color-mix(in_oklab,var(--primary)_38%,var(--muted-2))]">
+              {c.eyebrow}
+            </p>
             <h2 className="mt-2 text-3xl font-semibold tracking-tight text-fg sm:text-4xl md:text-[2.75rem] md:leading-[1.08]">
               {c.title}
             </h2>
@@ -77,7 +79,7 @@ export function BlogSection() {
           </div>
         </div>
 
-        <div className="mb-10 flex flex-col gap-4 rounded-2xl border border-[var(--border)] bg-surface/90 px-5 py-4 shadow-sm sm:flex-row sm:items-center sm:justify-between sm:px-6">
+        <div className="mb-10 flex flex-col gap-4 rounded-3xl border border-[var(--border)] bg-[color-mix(in_oklab,var(--surface)_94%,transparent)] px-5 py-4 shadow-[var(--elevation-1)] backdrop-blur-sm sm:flex-row sm:items-center sm:justify-between sm:px-6">
           <p className="text-[15px] leading-relaxed text-muted">{c.siteLikeIntro}</p>
           <LikeButton scope="site" labels={likeLabelsSite(c)} className="shrink-0" size="md" />
         </div>
@@ -107,7 +109,7 @@ export function BlogSection() {
                     show: { opacity: 1, y: 0, transition: spring },
                   }}
                 >
-                  <article className="card-shine group relative flex h-full flex-col overflow-hidden rounded-2xl border border-[var(--border)] bg-surface p-6 shadow-sm transition-shadow hover:shadow-lg sm:p-7">
+                  <article className="card-shine group relative flex h-full flex-col overflow-hidden rounded-3xl border border-[var(--border)] bg-surface p-6 shadow-[var(--elevation-1)] transition-shadow hover:shadow-[var(--elevation-hover)] sm:p-7">
                     <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-muted-2">
                       <span className="inline-flex items-center gap-1">
                         <Calendar className="h-3.5 w-3.5 shrink-0" strokeWidth={1.75} aria-hidden />
