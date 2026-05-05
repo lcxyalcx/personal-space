@@ -42,7 +42,7 @@ export default function RootLayout({
           <div className="site-ambient__sheen" />
           <div className="site-ambient__vignette" />
         </div>
-        <DifyChatbot />
+        {difyEnabled ? <DifyChatbot /> : null}
         {difyEnabled ? <DifyChatCue /> : null}
         <DifyChatPolish enabled={difyEnabled} />
         <DifyChatOnboarding enabled={difyEnabled} />
