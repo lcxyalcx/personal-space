@@ -49,12 +49,12 @@ export function SiteNav() {
   const hashBase = isHome ? "" : "/";
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 border-b border-[color-mix(in_oklab,var(--border)_70%,transparent)] bg-[color-mix(in_oklab,var(--surface)_78%,transparent)] shadow-[var(--nav-elev-shadow)] backdrop-blur-xl backdrop-saturate-[1.35]">
-      <div className="mx-auto flex h-12 max-w-6xl items-center justify-between px-4 sm:h-[3.25rem] sm:px-6">
+    <header className="fixed inset-x-0 top-3 z-50 px-3">
+      <div className="mx-auto flex h-12 max-w-6xl items-center justify-between rounded-full border border-[color-mix(in_oklab,#fff_68%,var(--border-strong))] bg-[color-mix(in_oklab,var(--surface)_68%,transparent)] px-3 shadow-[var(--nav-elev-shadow)] backdrop-blur-2xl backdrop-saturate-[1.45] sm:h-[3.25rem] sm:px-4">
         <a
           href={`${hashBase}#top`}
           aria-label={siteMeta.author}
-          className="flex items-center gap-2 rounded-md text-[15px] font-semibold tracking-tight text-fg transition-opacity hover:opacity-70 focus-visible:ring-2 focus-visible:ring-[var(--link)] focus-visible:ring-offset-2"
+          className="flex items-center gap-2 rounded-full text-[15px] font-semibold tracking-tight text-fg transition-opacity hover:opacity-70 focus-visible:ring-2 focus-visible:ring-[var(--link)] focus-visible:ring-offset-2"
         >
           <Image
             src="/author-avatar.jpg"

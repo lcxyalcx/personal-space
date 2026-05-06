@@ -1,35 +1,34 @@
 @import "tailwindcss";
 
-/*
- * 视觉基调：参考 leleo.top / Vuetify Material 浅色个人站
- * — 冷灰页面底、白卡片、蓝主色、清晰 elevation（与开源模板 leleo-home-page 气质一致）
- */
 :root {
-  --bg: #f4f6fa;
-  --bg-alt: #e9edf5;
-  --fg: #1e1f24;
-  --muted: #5c5f66;
-  --muted-2: #7b8089;
-  --primary: #1a73e8;
-  --primary-dark: #155fbc;
-  --link: #1565c0;
-  --link-hover: #0d47a1;
-  --accent: #1a73e8;
+  --bg: #f8fafc;
+  --bg-alt: #eef3f8;
+  --fg: #111217;
+  --muted: #535761;
+  --muted-2: #7c8492;
+  --primary: #0071e3;
+  --primary-dark: #005bb8;
+  --link: #0066cc;
+  --link-hover: #003f8f;
+  --accent: #8b5cf6;
+  --warm: #ff8a3d;
+  --mint: #00c7be;
+  --rose: #ff375f;
   --accent-soft: color-mix(in oklab, var(--primary) 16%, transparent);
-  --border: rgba(30, 36, 48, 0.09);
-  --border-strong: rgba(30, 36, 48, 0.14);
+  --border: rgba(22, 26, 34, 0.1);
+  --border-strong: rgba(22, 26, 34, 0.16);
   --surface: #ffffff;
-  --footer-bg: #1a1d24;
+  --footer-bg: #111217;
   --footer-fg: #eceff4;
   --footer-muted: #9aa3b2;
   --background: var(--bg);
   --foreground: var(--fg);
-  --glass-surface: color-mix(in oklab, var(--surface) 88%, transparent);
-  --nav-elev-shadow: 0 8px 32px -12px rgba(24, 32, 48, 0.18);
+  --glass-surface: color-mix(in oklab, var(--surface) 72%, transparent);
+  --nav-elev-shadow: 0 18px 42px -28px rgba(18, 22, 30, 0.42);
   --chip-ring: rgba(26, 115, 232, 0.12);
-  --elevation-1: 0 1px 2px rgba(24, 32, 48, 0.06), 0 2px 10px rgba(24, 32, 48, 0.06);
-  --elevation-hover: 0 10px 28px -10px rgba(24, 32, 48, 0.14), 0 4px 14px rgba(26, 115, 232, 0.08);
-  --timeline-line: #c5cbd6;
+  --elevation-1: 0 1px 2px rgba(18, 22, 30, 0.05), 0 20px 60px -42px rgba(18, 22, 30, 0.42);
+  --elevation-hover: 0 26px 70px -34px rgba(18, 22, 30, 0.42), 0 12px 28px rgba(0, 113, 227, 0.1);
+  --timeline-line: color-mix(in oklab, var(--fg) 13%, transparent);
 }
 
 @theme inline {
@@ -54,33 +53,37 @@ html {
 }
 
 body {
-  background: var(--bg);
+  background:
+    linear-gradient(180deg, #fbfdff 0%, var(--bg) 38%, #f2f6fb 100%);
   color: var(--fg);
   font-family: var(--font-sans);
 }
 
-/* 各区块毛玻璃容器（叠在 bg / bg-alt 之上） */
 .module-glass {
-  border-radius: 1.75rem;
-  background: color-mix(in oklab, var(--surface) 58%, transparent);
-  border: 1px solid color-mix(in oklab, #fff 72%, var(--border-strong));
+  border-radius: 2rem;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.78), rgba(255, 255, 255, 0.5)),
+    color-mix(in oklab, var(--surface) 58%, transparent);
+  border: 1px solid color-mix(in oklab, #fff 76%, var(--border-strong));
   box-shadow: var(--elevation-1);
-  backdrop-filter: blur(22px) saturate(1.28);
-  -webkit-backdrop-filter: blur(22px) saturate(1.28);
+  backdrop-filter: blur(28px) saturate(1.35);
+  -webkit-backdrop-filter: blur(28px) saturate(1.35);
 }
 
 .module-glass--alt {
-  background: color-mix(in oklab, var(--surface) 52%, var(--bg-alt) 48%);
-  border-color: color-mix(in oklab, #fff 55%, var(--border-strong));
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.74), rgba(240, 246, 252, 0.56)),
+    color-mix(in oklab, var(--surface) 48%, var(--bg-alt) 52%);
+  border-color: color-mix(in oklab, #fff 62%, var(--border-strong));
 }
 
 .module-glass--hero {
-  border-radius: 1.5rem;
-  background: color-mix(in oklab, var(--surface) 48%, transparent);
-  border: 1px solid color-mix(in oklab, #fff 65%, var(--border-strong));
-  box-shadow: var(--elevation-1);
-  backdrop-filter: blur(18px) saturate(1.22);
-  -webkit-backdrop-filter: blur(18px) saturate(1.22);
+  border-radius: 2.35rem;
+  background: color-mix(in oklab, var(--surface) 55%, transparent);
+  border: 1px solid color-mix(in oklab, #fff 76%, var(--border-strong));
+  box-shadow: 0 30px 90px -50px rgba(18, 22, 30, 0.55);
+  backdrop-filter: blur(30px) saturate(1.4);
+  -webkit-backdrop-filter: blur(30px) saturate(1.4);
 }
 
 .module-glass--footer {
@@ -101,7 +104,6 @@ body {
   }
 }
 
-/* 全站环境层：暖色纸面 + 轻科技网格与漂移光晕（在正文 z-10 之下） */
 .site-ambient {
   pointer-events: none;
   position: fixed;
@@ -114,61 +116,66 @@ body {
   position: absolute;
   inset: -20%;
   background-image:
-    linear-gradient(rgba(36, 44, 58, 0.055) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(36, 44, 58, 0.055) 1px, transparent 1px);
-  background-size: 56px 56px;
+    linear-gradient(rgba(36, 44, 58, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(36, 44, 58, 0.04) 1px, transparent 1px);
+  background-size: 64px 64px;
   mask-image: radial-gradient(ellipse 75% 65% at 50% 42%, black 0%, transparent 72%);
-  opacity: 0.85;
+  opacity: 0.68;
   animation: site-ambient-grid-pan 90s linear infinite;
 }
 
 .site-ambient__orb {
   position: absolute;
-  border-radius: 50%;
-  filter: blur(72px);
+  filter: blur(34px);
   mix-blend-mode: multiply;
-  opacity: 0.55;
+  opacity: 0.34;
+  transform-origin: center;
 }
 
 .site-ambient__orb--a {
-  width: min(52vw, 520px);
-  height: min(52vw, 520px);
-  top: -12%;
-  right: -8%;
-  background: radial-gradient(
-    circle at 40% 40%,
-    color-mix(in oklab, var(--primary) 34%, transparent),
-    transparent 68%
+  width: 125vw;
+  height: 38vh;
+  top: -12vh;
+  right: -34vw;
+  background: conic-gradient(
+    from 155deg,
+    transparent,
+    color-mix(in oklab, var(--primary) 30%, transparent),
+    color-mix(in oklab, var(--mint) 22%, transparent),
+    transparent 58%
   );
   animation: site-ambient-float-a 36s ease-in-out infinite;
 }
 
 .site-ambient__orb--b {
-  width: min(48vw, 480px);
-  height: min(48vw, 480px);
-  bottom: -18%;
-  left: -14%;
-  background: radial-gradient(
-    circle at 55% 45%,
-    rgba(99, 102, 241, 0.16),
-    transparent 70%
+  width: 118vw;
+  height: 42vh;
+  bottom: -16vh;
+  left: -28vw;
+  background: linear-gradient(
+    100deg,
+    transparent,
+    color-mix(in oklab, var(--rose) 16%, transparent),
+    color-mix(in oklab, var(--warm) 18%, transparent),
+    transparent
   );
   animation: site-ambient-float-b 44s ease-in-out infinite;
 }
 
 .site-ambient__orb--c {
-  width: min(36vw, 360px);
-  height: min(36vw, 360px);
-  top: 38%;
+  width: 92vw;
+  height: 32vh;
+  top: 42%;
   left: 50%;
-  translate: -50% 0;
-  background: radial-gradient(
-    circle at 50% 50%,
-    rgba(52, 64, 88, 0.1),
-    transparent 65%
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in oklab, var(--accent) 12%, transparent),
+    color-mix(in oklab, var(--primary) 10%, transparent),
+    transparent
   );
   mix-blend-mode: normal;
-  opacity: 0.9;
+  opacity: 0.7;
   animation: site-ambient-float-c 52s ease-in-out infinite;
 }
 
@@ -256,41 +263,58 @@ body {
   color: var(--fg);
 }
 
-/* 首屏柔光：偏 Material 冷灰 + 淡蓝 */
 .hero-glow {
   background:
     radial-gradient(
-      ellipse 100% 82% at 50% -18%,
-      color-mix(in oklab, var(--primary) 12%, transparent),
-      transparent 58%
+      ellipse 110% 82% at 50% -12%,
+      color-mix(in oklab, var(--primary) 15%, transparent),
+      transparent 60%
     ),
     radial-gradient(
-      ellipse 58% 48% at 96% 4%,
-      rgba(99, 102, 241, 0.06),
-      transparent 52%
-    );
+      ellipse 72% 54% at 86% 20%,
+      color-mix(in oklab, var(--rose) 9%, transparent),
+      transparent 60%
+    ),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.8), transparent 44%);
 }
 
-/* 细网格 */
 .hero-mesh {
   background-image:
-    linear-gradient(rgba(36, 44, 58, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(36, 44, 58, 0.05) 1px, transparent 1px);
-  background-size: 44px 44px;
-  mask-image: radial-gradient(ellipse 85% 75% at 50% 42%, black 12%, transparent 72%);
-  opacity: 0.88;
+    linear-gradient(rgba(36, 44, 58, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(36, 44, 58, 0.035) 1px, transparent 1px);
+  background-size: 52px 52px;
+  mask-image: radial-gradient(ellipse 90% 78% at 50% 38%, black 8%, transparent 74%);
+  opacity: 0.72;
 }
 
 .hero-scan {
   background: repeating-linear-gradient(
     0deg,
     transparent,
-    transparent 3px,
-    rgba(36, 44, 58, 0.05) 3px,
-    rgba(36, 44, 58, 0.05) 4px
+    transparent 4px,
+    rgba(36, 44, 58, 0.025) 4px,
+    rgba(36, 44, 58, 0.025) 5px
   );
   mask-image: radial-gradient(ellipse 90% 70% at 50% 45%, black 25%, transparent 75%);
   animation: hero-scan-drift 20s linear infinite;
+}
+
+.hero-spectrum {
+  background:
+    conic-gradient(
+      from 215deg at 50% 52%,
+      transparent 0deg,
+      color-mix(in oklab, var(--primary) 34%, transparent) 42deg,
+      color-mix(in oklab, var(--mint) 24%, transparent) 92deg,
+      color-mix(in oklab, var(--warm) 24%, transparent) 142deg,
+      color-mix(in oklab, var(--rose) 24%, transparent) 196deg,
+      transparent 254deg
+    );
+  filter: blur(42px) saturate(1.25);
+  mask-image: linear-gradient(180deg, transparent 0%, black 24%, black 64%, transparent 100%);
+  opacity: 0.44;
+  transform: rotate(-6deg);
+  animation: hero-spectrum-shift 18s ease-in-out infinite;
 }
 
 @keyframes hero-scan-drift {
@@ -302,8 +326,20 @@ body {
   }
 }
 
+@keyframes hero-spectrum-shift {
+  0%,
+  100% {
+    transform: rotate(-6deg) translateY(0);
+    opacity: 0.38;
+  }
+  50% {
+    transform: rotate(-3deg) translateY(18px);
+    opacity: 0.52;
+  }
+}
+
 .headline-gradient {
-  background: linear-gradient(180deg, #1a1d24 0%, #3d4556 100%);
+  background: linear-gradient(180deg, #05060a 0%, #2f3440 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -312,12 +348,13 @@ body {
 .headline-gradient.headline-drift {
   background: linear-gradient(
     118deg,
-    #1a1d24 0%,
-    #2f3a4d 18%,
-    #1a73e8 38%,
-    #334155 56%,
-    #1a1d24 78%,
-    #252830 100%
+    #05060a 0%,
+    #212734 18%,
+    #0071e3 36%,
+    #8b5cf6 50%,
+    #ff375f 62%,
+    #242936 78%,
+    #05060a 100%
   );
   background-size: 260% 260%;
   animation:
@@ -338,12 +375,104 @@ body {
 @keyframes headline-breathe {
   0%,
   100% {
-    letter-spacing: -0.035em;
     filter: brightness(1);
   }
   50% {
-    letter-spacing: 0.012em;
     filter: brightness(1.03);
+  }
+}
+
+.liquid-chip {
+  border-radius: 9999px;
+  border: 1px solid color-mix(in oklab, #fff 68%, var(--border));
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.86), rgba(255, 255, 255, 0.46)),
+    color-mix(in oklab, var(--surface) 74%, transparent);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.86),
+    0 16px 34px -26px rgba(18, 22, 30, 0.45);
+  backdrop-filter: blur(18px) saturate(1.35);
+  -webkit-backdrop-filter: blur(18px) saturate(1.35);
+}
+
+.hero-social-button {
+  border: 1px solid color-mix(in oklab, #fff 64%, var(--border-strong));
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.58)),
+    color-mix(in oklab, var(--surface) 76%, transparent);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.86),
+    0 18px 44px -28px rgba(18, 22, 30, 0.5);
+  backdrop-filter: blur(18px) saturate(1.32);
+  -webkit-backdrop-filter: blur(18px) saturate(1.32);
+}
+
+.hero-portrait-wrap::before {
+  content: "";
+  position: absolute;
+  inset: -18% -22% -16%;
+  z-index: -1;
+  background:
+    conic-gradient(
+      from 178deg at 50% 50%,
+      color-mix(in oklab, var(--primary) 26%, transparent),
+      color-mix(in oklab, var(--accent) 20%, transparent),
+      color-mix(in oklab, var(--rose) 18%, transparent),
+      color-mix(in oklab, var(--mint) 18%, transparent),
+      color-mix(in oklab, var(--primary) 26%, transparent)
+    );
+  filter: blur(34px);
+  opacity: 0.55;
+  animation: hero-portrait-aura 14s ease-in-out infinite;
+}
+
+.hero-portrait-stage {
+  border: 1px solid color-mix(in oklab, #fff 72%, var(--border-strong));
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.32)),
+    color-mix(in oklab, var(--surface) 58%, transparent);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    inset 0 -20px 40px rgba(255, 255, 255, 0.22),
+    0 42px 120px -52px rgba(18, 22, 30, 0.72);
+  backdrop-filter: blur(28px) saturate(1.45);
+  -webkit-backdrop-filter: blur(28px) saturate(1.45);
+}
+
+.hero-portrait-screen {
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.24),
+    inset 0 -80px 120px rgba(0, 0, 0, 0.22);
+}
+
+.hero-portrait-screen::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(105deg, rgba(255, 255, 255, 0.32) 0%, transparent 22%, transparent 68%, rgba(255, 255, 255, 0.2) 100%);
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+.hero-floating-note {
+  border: 1px solid color-mix(in oklab, #fff 72%, var(--border));
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.82), rgba(255, 255, 255, 0.46)),
+    color-mix(in oklab, var(--surface) 68%, transparent);
+  backdrop-filter: blur(22px) saturate(1.35);
+  -webkit-backdrop-filter: blur(22px) saturate(1.35);
+}
+
+@keyframes hero-portrait-aura {
+  0%,
+  100% {
+    transform: rotate(0deg) scale(0.98);
+    opacity: 0.48;
+  }
+  50% {
+    transform: rotate(14deg) scale(1.04);
+    opacity: 0.68;
   }
 }
 

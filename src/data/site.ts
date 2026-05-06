@@ -30,8 +30,9 @@ export const siteMeta = {
 export const hero = {
   /** Apple「Hello」式开场：多行轮播，可增删语言 */
   greetings: ["你好。", "Hello.", "Bonjour.", "Hola."],
-  headline: "Exploring the technical frontier of large language models and agents.",
-  subline: "Hello，I am Jacob Liu， a postgraduate student at Fudan University interested in LLM inference acceleration, reinforcement learning, and Agent architecture.Please feel free to explore my projects and blog posts to learn more about my work and interests.",
+  headline: "Exploring the frontier of large language models and agents.",
+  subline:
+    "I am Jacob Liu, a postgraduate student at Fudan University working on LLM inference acceleration, reinforcement learning, and Agent architecture. This site collects my projects, writing, and small experiments.",
   /** 首屏副标题下方的一行补充说明 */
   statusLine: " ",
 };
