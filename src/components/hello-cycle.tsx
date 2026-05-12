@@ -45,7 +45,7 @@ export function HelloCycle({ onChromaIndexChange }: Props) {
             transition: { duration: 0.52, ease: easeApple },
           }}
           transition={{ duration: 0.72, ease: easeApple }}
-          className="hello-line text-center text-[clamp(2.85rem,11vw,5.75rem)] font-semibold leading-[1.08] tracking-[-0.03em] sm:text-left"
+          className="hello-line font-display text-center text-[clamp(2.7rem,10vw,5.4rem)] font-medium leading-[1.08] tracking-[-0.04em] sm:text-left"
           style={{
             backgroundImage: bg,
             backgroundSize: "100% 100%",

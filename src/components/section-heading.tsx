@@ -40,9 +40,13 @@ export function SectionHeading({ eyebrow, title, hint }: Props) {
       >
         {eyebrow}
       </motion.p>
+      <motion.div
+        variants={item}
+        className="mx-auto mt-4 h-px w-16 bg-[linear-gradient(90deg,transparent,color-mix(in_oklab,var(--primary)_46%,transparent),transparent)] sm:mx-0"
+      />
       <motion.h2
         variants={item}
-        className="mt-2 text-3xl font-semibold tracking-tight text-fg sm:text-4xl md:text-[2.75rem] md:leading-[1.08]"
+        className="mt-5 text-3xl font-semibold tracking-[-0.03em] text-fg sm:text-4xl md:text-[2.75rem] md:leading-[1.08]"
       >
         {title}
       </motion.h2>

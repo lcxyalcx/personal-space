@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { DM_Sans } from "next/font/google";
+import { Fraunces, Manrope } from "next/font/google";
 import Script from "next/script";
 import { DifyChatCue } from "@/components/dify-chat-cue";
 import { DifyChatOnboarding } from "@/components/dify-chat-onboarding";
@@ -9,9 +9,15 @@ import { MotionProvider } from "@/components/motion-provider";
 import { siteMeta } from "@/data/site";
 import "./globals.css";
 
-const dmSans = DM_Sans({
+const manrope = Manrope({
   subsets: ["latin"],
-  variable: "--font-dm-sans",
+  variable: "--font-manrope",
+  display: "swap",
+});
+
+const fraunces = Fraunces({
+  subsets: ["latin"],
+  variable: "--font-fraunces",
   display: "swap",
 });
 
@@ -32,8 +38,11 @@ export default function RootLayout({
   const difyEnabled = Boolean(process.env.NEXT_PUBLIC_DIFY_CHATBOT_TOKEN);
 
   return (
-    <html lang="zh-CN" className={`h-full scroll-smooth antialiased ${dmSans.variable}`}>
-      <body className="min-h-full bg-bg font-sans text-fg">
+    <html
+      lang="zh-CN"
+      className={`h-full scroll-smooth antialiased ${manrope.variable} ${fraunces.variable}`}
+    >
+      <body className="min-h-full bg-bg text-fg">
         <div className="site-ambient" aria-hidden>
           <div className="site-ambient__grid" />
           <div className="site-ambient__orb site-ambient__orb--a" />

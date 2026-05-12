@@ -1,24 +1,11 @@
 "use client";
 
 import Image from "next/image";
-import {
-  Binary,
-  Blocks,
-  Bolt,
-  Brackets,
-  BrainCircuit,
-  Cpu,
-  FolderGit2,
-  Mail,
-  Sparkles,
-  UsersRound,
-  X,
-} from "lucide-react";
+import { ArrowUpRight, FolderGit2, Mail, Sparkles, UsersRound, X } from "lucide-react";
 import { motion, useReducedMotion, useScroll, useSpring, useTransform } from "framer-motion";
-import { useCallback, useRef, useState } from "react";
+import { useRef } from "react";
 import { HelloCycle } from "@/components/hello-cycle";
-import { CHROMA_PALETTES } from "@/data/chroma-palettes";
-import { hero, siteMeta, social } from "@/data/site";
+import { hero, projects, siteMeta, social } from "@/data/site";
 
 const socialConfig = [
   {
@@ -47,123 +34,83 @@ const socialConfig = [
   },
 ].filter((x) => x.show);
 
-const techStrip = [
-  { Icon: BrainCircuit, label: "思考" },
-  { Icon: Brackets, label: "抽象" },
-  { Icon: Blocks, label: "系统" },
-  { Icon: Binary, label: "比特" },
-  { Icon: Bolt, label: "交付" },
-] as const;
-
-const spring = { type: "spring" as const, stiffness: 380, damping: 28 };
+const spring = { type: "spring" as const, stiffness: 320, damping: 28 };
 
 export function Hero() {
   const sectionRef = useRef<HTMLElement | null>(null);
-  const [chromaIdx, setChromaIdx] = useState(0);
-  const onChromaIndexChange = useCallback((ix: number) => setChromaIdx(ix), []);
-  const chroma = CHROMA_PALETTES[chromaIdx % CHROMA_PALETTES.length]!;
   const reduce = useReducedMotion();
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start start", "end start"],
   });
+
   const scrollEase = useSpring(scrollYProgress, {
-    stiffness: reduce ? 520 : 78,
-    damping: reduce ? 520 : 26,
-    mass: reduce ? 0.08 : 0.42,
+    stiffness: reduce ? 520 : 86,
+    damping: reduce ? 520 : 24,
+    mass: reduce ? 0.08 : 0.45,
   });
-  const contentY = useTransform(scrollEase, [0, 1], [0, reduce ? 0 : 56]);
-  const visualY = useTransform(scrollEase, [0, 1], [0, reduce ? 0 : -34]);
+
+  const contentY = useTransform(scrollEase, [0, 1], [0, reduce ? 0 : 42]);
+  const boardY = useTransform(scrollEase, [0, 1], [0, reduce ? 0 : -24]);
 
   return (
     <section
       ref={sectionRef}
       id="top"
-      className="relative flex min-h-[94vh] flex-col justify-center overflow-hidden px-4 pb-20 pt-24 sm:px-6 lg:pb-24"
+      className="relative flex min-h-[96vh] flex-col justify-center overflow-hidden px-4 pb-20 pt-24 sm:px-6 lg:pb-24"
     >
       <div className="pointer-events-none absolute inset-0 hero-glow" aria-hidden />
-      <div className="hero-mesh pointer-events-none absolute inset-0" aria-hidden />
-      <div className="hero-scan pointer-events-none absolute inset-0" aria-hidden />
-      <div className="hero-spectrum pointer-events-none absolute inset-x-[-18%] top-[9%] h-[42rem]" aria-hidden />
+      <div className="pointer-events-none absolute inset-0 hero-mesh" aria-hidden />
 
       <motion.div
-        className="relative mx-auto grid w-full max-w-6xl items-center gap-10 lg:grid-cols-[minmax(0,1.02fr)_minmax(22rem,0.78fr)] lg:gap-14"
+        className="relative mx-auto grid w-full max-w-6xl items-start gap-10 lg:grid-cols-[minmax(0,1.14fr)_minmax(21rem,0.86fr)] lg:gap-12"
         style={{ y: contentY }}
       >
-        <div className="relative z-10">
-          <HelloCycle onChromaIndexChange={onChromaIndexChange} />
-
-          <div
-            aria-hidden
-            className="hello-chroma-strip mx-auto mb-6 mt-1 h-1.5 max-w-[min(22rem,92vw)] rounded-full shadow-[0_10px_30px_color-mix(in_oklab,var(--primary)_20%,transparent)] ring-1 ring-white/60 sm:mx-0"
-            style={{
-              backgroundImage: chroma.hello,
-              backgroundSize: "100% 100%",
-              backgroundRepeat: "no-repeat",
-            }}
-          />
+        <div className="relative z-10 pt-4">
+          <HelloCycle />
 
           <motion.p
-            className="text-center text-xs font-semibold uppercase tracking-[0.2em] sm:text-left"
-            style={{ color: chroma.caption }}
+            className="text-center text-[11px] font-semibold uppercase tracking-[0.24em] text-[var(--primary-dark)] sm:text-left"
             initial={false}
-            animate={{ opacity: 1, scale: 1 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ ...spring, delay: 0.05 }}
           >
-            {siteMeta.author}
+            {siteMeta.author} · Agent Systems · AI Product Engineering
           </motion.p>
+
           <motion.h1
-            className="headline-gradient headline-drift relative mt-4 max-w-4xl text-balance text-center text-[clamp(2.35rem,7vw,5.8rem)] font-semibold leading-[0.96] tracking-tight sm:text-left"
+            className="mt-5 max-w-4xl text-balance font-display text-[clamp(2.85rem,7vw,5.85rem)] leading-[0.93] tracking-[-0.04em] text-fg sm:text-left"
             initial={false}
             animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-            transition={{ duration: 0.85, ease: "easeOut", delay: 0.14 }}
+            transition={{ duration: 0.82, ease: "easeOut", delay: 0.12 }}
           >
             {hero.headline}
           </motion.h1>
+
           <motion.p
-            className="mx-auto mt-7 max-w-2xl text-center text-[clamp(1.05rem,2.2vw,1.32rem)] leading-relaxed text-muted sm:mx-0 sm:text-left"
+            className="mx-auto mt-6 max-w-2xl text-center text-[clamp(1.04rem,1.8vw,1.15rem)] leading-relaxed text-muted sm:mx-0 sm:text-left"
             initial={false}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ ...spring, delay: 0.22 }}
+            transition={{ ...spring, delay: 0.2 }}
           >
             {hero.subline}
           </motion.p>
-          {hero.statusLine.trim() ? (
-            <motion.p
-              className="mx-auto mt-5 max-w-xl text-center text-sm text-muted-2 sm:mx-0 sm:text-left"
-              initial={false}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ ...spring, delay: 0.3 }}
-            >
-              {hero.statusLine}
-            </motion.p>
-          ) : null}
 
           <motion.div
-            className="mt-8 flex flex-wrap items-center justify-center gap-2 sm:justify-start"
+            className="mt-7 flex flex-wrap items-center justify-center gap-2.5 sm:justify-start"
             initial={false}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ ...spring, delay: 0.34 }}
-            aria-hidden
+            transition={{ ...spring, delay: 0.26 }}
           >
-            {techStrip.map(({ Icon, label }, i) => (
+            {hero.focusAreas.map((area, i) => (
               <motion.span
-                key={label}
-                className="liquid-chip inline-flex items-center gap-1.5 px-3 py-1.5 text-[11px] font-medium uppercase tracking-wider text-muted"
+                key={area}
+                className="liquid-chip inline-flex items-center px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-muted"
                 initial={false}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ ...spring, delay: 0.36 + i * 0.05 }}
-                whileHover={
-                  reduce
-                    ? { y: -2 }
-                    : {
-                        y: -2,
-                        borderColor: "color-mix(in oklab, var(--primary) 32%, transparent)",
-                      }
-                }
+                transition={{ ...spring, delay: 0.28 + i * 0.04 }}
               >
-                <Icon className="h-3.5 w-3.5 shrink-0 text-muted-2" strokeWidth={1.75} />
-                {label}
+                {area}
               </motion.span>
             ))}
           </motion.div>
@@ -175,7 +122,7 @@ export function Hero() {
               animate="show"
               variants={{
                 hidden: {},
-                show: { transition: { staggerChildren: 0.07, delayChildren: 0.42 } },
+                show: { transition: { staggerChildren: 0.07, delayChildren: 0.34 } },
               }}
             >
               {socialConfig.map(({ href, label, Icon }) => (
@@ -191,7 +138,7 @@ export function Hero() {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="hero-social-button inline-flex h-12 items-center gap-2 rounded-full px-4 text-[15px] font-medium text-fg focus-visible:ring-2 focus-visible:ring-[var(--link)] focus-visible:ring-offset-2"
-                    whileHover={{ scale: 1.04, y: -2, boxShadow: "0 20px 46px -18px rgba(0,0,0,0.26)" }}
+                    whileHover={{ scale: 1.03, y: -2 }}
                     whileTap={{ scale: 0.97 }}
                     transition={spring}
                   >
@@ -202,55 +149,130 @@ export function Hero() {
               ))}
             </motion.ul>
           ) : null}
+
+          <motion.p
+            className="mx-auto mt-8 max-w-xl text-center text-sm leading-relaxed text-muted-2 sm:mx-0 sm:text-left"
+            initial={false}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ ...spring, delay: 0.42 }}
+          >
+            {hero.statusLine}
+          </motion.p>
         </div>
 
-        <motion.div className="hero-portrait-wrap relative mx-auto w-full max-w-[24rem] lg:mx-0" style={{ y: visualY }}>
-          <motion.div
-            className="hero-portrait-stage relative aspect-[0.78] overflow-hidden rounded-[2.35rem] p-3"
-            initial={false}
-            animate={reduce ? undefined : { rotate: [0, 0.7, -0.4, 0], y: [0, -8, 0] }}
-            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-          >
-            <div className="hero-portrait-screen relative h-full overflow-hidden rounded-[1.75rem]">
-              <Image
-                src="/author-avatar.jpg"
-                alt={`${siteMeta.author} portrait`}
-                fill
-                sizes="(max-width: 1024px) 90vw, 384px"
-                className="object-cover"
-                priority
-              />
-              <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent_32%,rgba(0,0,0,0.5)_100%)]" aria-hidden />
-              <div className="absolute inset-x-5 bottom-5">
-                <div className="flex items-center justify-between gap-3">
-                  <div>
-                    <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/70">Current Focus</p>
-                    <p className="mt-1 text-lg font-semibold leading-tight text-white">LLM Agents & RL</p>
-                  </div>
-                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white/18 text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.35)] backdrop-blur-md">
-                    <Cpu className="h-5 w-5" strokeWidth={1.75} aria-hidden />
-                  </span>
-                </div>
+        <motion.aside className="hero-board relative" style={{ y: boardY }}>
+          <div className="hero-board__header">
+            <div className="flex items-center gap-3">
+              <div className="relative h-12 w-12 overflow-hidden rounded-2xl border border-white/10 bg-white/6">
+                <Image
+                  src="/author-avatar.jpg"
+                  alt={`${siteMeta.author} portrait`}
+                  fill
+                  sizes="48px"
+                  className="object-cover"
+                  priority
+                />
+              </div>
+              <div>
+                <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/45">Field Notes</p>
+                <p className="mt-1 text-base font-medium text-white/90">How I think about systems, products, and recent work</p>
               </div>
             </div>
-          </motion.div>
+            <span className="hero-board__badge">
+              <Sparkles className="h-3.5 w-3.5" strokeWidth={1.75} aria-hidden />
+              Ongoing
+            </span>
+          </div>
+
           <motion.div
-            className="hero-floating-note absolute -left-2 top-8 hidden w-44 rounded-[1.35rem] px-4 py-3 text-sm text-fg shadow-[0_18px_48px_-24px_rgba(0,0,0,0.35)] sm:block"
-            animate={reduce ? undefined : { y: [0, 10, 0] }}
-            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+            className="hero-note-card mt-5"
+            initial={false}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ ...spring, delay: 0.16 }}
           >
-            <Sparkles className="mb-2 h-4 w-4 text-[var(--primary)]" strokeWidth={1.75} aria-hidden />
-            Speculative decoding, faster rollouts, calmer systems.
+            <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/42">How I work</p>
+            <div className="mt-4 space-y-4">
+              {hero.principles.map((item) => (
+                <div key={item.title} className="border-l border-white/14 pl-4">
+                  <p className="text-sm font-semibold uppercase tracking-[0.16em] text-white/78">{item.title}</p>
+                  <p className="mt-1.5 text-sm leading-relaxed text-white/60">{item.detail}</p>
+                </div>
+              ))}
+            </div>
           </motion.div>
+
           <motion.div
-            className="hero-floating-note absolute -right-2 bottom-10 hidden w-36 rounded-[1.35rem] px-4 py-3 text-sm text-fg shadow-[0_18px_48px_-24px_rgba(0,0,0,0.35)] sm:block"
-            animate={reduce ? undefined : { y: [0, -12, 0] }}
-            transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 0.6 }}
+            className="hero-note-card mt-4"
+            initial={false}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ ...spring, delay: 0.24 }}
           >
-            <Bolt className="mb-2 h-4 w-4 text-[var(--warm)]" strokeWidth={1.75} aria-hidden />
-            Building personal tools with a research pulse.
+            <div className="flex items-center justify-between gap-3">
+              <div>
+                <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/42">Recent Public Updates</p>
+                <p className="mt-1 text-sm leading-relaxed text-white/62">最新公开项目会被收进作品集，但不会盖过整体研究方向。</p>
+              </div>
+            </div>
+
+            <div className="mt-4 space-y-3">
+              {projects.slice(0, 2).map((project) => (
+                <div key={project.name} className="hero-update-row">
+                  <div>
+                    <p className="text-base font-semibold text-white">{project.name}</p>
+                    <p className="mt-1 text-sm text-white/58">{project.role}</p>
+                  </div>
+                  <a
+                    href={project.links[0]!.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 rounded-full border border-white/12 bg-white/8 px-3 py-1.5 text-xs font-medium uppercase tracking-[0.14em] text-white/78 transition-colors hover:bg-white/14"
+                  >
+                    Open
+                    <ArrowUpRight className="h-3.5 w-3.5" strokeWidth={1.8} aria-hidden />
+                  </a>
+                </div>
+              ))}
+            </div>
           </motion.div>
-        </motion.div>
+
+          <div className="mt-4 grid gap-3 sm:grid-cols-3">
+            {hero.stats.map((item, i) => {
+              const isBaseCard = i === hero.stats.length - 1;
+
+              return (
+                <motion.div
+                  key={item.label}
+                  className={`hero-stat-card${isBaseCard ? " hero-stat-card--surface" : ""}`}
+                  initial={false}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ ...spring, delay: 0.34 + i * 0.06 }}
+                >
+                  <p
+                    className={`text-[11px] font-semibold uppercase tracking-[0.18em] ${
+                      isBaseCard ? "text-[var(--muted-2)]" : "text-white/40"
+                    }`}
+                  >
+                    {item.label}
+                  </p>
+                  <p
+                    className={`mt-3 text-lg font-semibold leading-snug ${
+                      isBaseCard ? "text-[var(--fg)]" : "text-white"
+                    }`}
+                  >
+                    {item.value}
+                  </p>
+                  <p
+                    className={`mt-2 text-sm leading-relaxed ${
+                      isBaseCard ? "text-[var(--muted)]" : "text-white/60"
+                    }`}
+                  >
+                    {item.detail}
+                  </p>
+                </motion.div>
+              );
+            })}
+          </div>
+        </motion.aside>
       </motion.div>
     </section>
   );

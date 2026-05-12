@@ -5,77 +5,87 @@ import { motion } from "framer-motion";
 import { projects, sectionCopy } from "@/data/site";
 import { SectionHeading } from "./section-heading";
 
-const spring = { type: "spring" as const, stiffness: 400, damping: 30 };
+const spring = { type: "spring" as const, stiffness: 380, damping: 30 };
 
 export function ProjectsSection() {
   const c = sectionCopy.projects;
+
   return (
     <section id="projects" className="scroll-mt-16 bg-bg px-4 py-14 sm:px-6 sm:py-20">
       <div className="module-glass mx-auto max-w-6xl px-5 py-12 sm:px-8 sm:py-16">
         <SectionHeading eyebrow={c.eyebrow} title={c.title} hint={c.hint} />
+
         <motion.ul
-          className="grid gap-5 [perspective:1200px] md:grid-cols-2 md:gap-6"
+          className="grid gap-5 md:grid-cols-2 md:gap-6"
           initial={false}
           whileInView="show"
           viewport={{ once: true, amount: 0.15, margin: "0px" }}
           variants={{
             hidden: {},
-            show: { transition: { staggerChildren: 0.1 } },
+            show: { transition: { staggerChildren: 0.08 } },
           }}
         >
-          {projects.map((p) => (
+          {projects.map((project, i) => (
             <motion.li
-              key={p.name}
+              key={project.name}
               variants={{
-                hidden: { opacity: 0, y: 36, rotateX: -6 },
-                show: {
-                  opacity: 1,
-                  y: 0,
-                  rotateX: 0,
-                  transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] as const },
-                },
+                hidden: { opacity: 0, y: 28 },
+                show: { opacity: 1, y: 0, transition: spring },
               }}
             >
               <motion.article
-                className="card-shine group relative flex h-full flex-col overflow-hidden rounded-3xl border border-[var(--border)] bg-surface p-6 shadow-[var(--elevation-1)] sm:p-8"
-                whileHover={{
-                  y: -6,
-                  rotateX: 2,
-                  boxShadow: "0 24px 48px -20px rgba(0,0,0,0.16)",
-                }}
+                className={`project-card group h-full ${i % 2 === 0 ? "project-card--teal" : "project-card--amber"}`}
+                whileHover={{ y: -4, boxShadow: "var(--elevation-hover)" }}
                 transition={spring}
-                style={{ transformStyle: "preserve-3d" }}
               >
-                <div className="flex items-start justify-between gap-4">
-                  <h3 className="text-[21px] font-semibold leading-snug tracking-tight text-fg">
-                    {p.name}
-                  </h3>
-                  <span className="shrink-0 text-xs font-medium text-muted-2">{p.year}</span>
+                <div className="flex flex-wrap items-start justify-between gap-4">
+                  <div>
+                    <div className="flex flex-wrap items-center gap-2">
+                      <span className="project-card__status">{project.status}</span>
+                      <span className="text-xs font-medium uppercase tracking-[0.16em] text-muted-2">
+                        {project.year}
+                      </span>
+                    </div>
+                    <h3 className="mt-4 text-[1.9rem] font-semibold tracking-tight text-fg">{project.name}</h3>
+                    <p className="mt-1 text-sm text-muted">{project.role}</p>
+                  </div>
                 </div>
-                <p className="mt-3 flex-1 text-[17px] leading-relaxed text-muted">{p.description}</p>
-                <div className="mt-5 flex flex-wrap gap-2">
-                  {p.stack.map((s) => (
-                    <motion.span
-                      key={s}
-                      className="rounded-full bg-bg-alt px-3 py-1 text-xs font-medium text-muted"
-                      whileHover={{ scale: 1.06, backgroundColor: "rgba(0,102,204,0.08)" }}
-                      transition={spring}
-                    >
-                      {s}
-                    </motion.span>
+
+                <p className="mt-5 text-[16px] leading-relaxed text-muted">{project.description}</p>
+
+                <p className="project-card__highlight mt-5">{project.highlight}</p>
+
+                <ul className="mt-6 space-y-3">
+                  {project.bullets.map((bullet) => (
+                    <li key={bullet} className="flex gap-3 text-[15px] leading-relaxed text-muted">
+                      <span className="mt-[0.58rem] h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--primary)]" aria-hidden />
+                      <span>{bullet}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                <div className="mt-6 flex flex-wrap gap-2">
+                  {project.stack.map((item) => (
+                    <span key={item} className="project-chip">
+                      {item}
+                    </span>
                   ))}
                 </div>
-                {p.link ? (
-                  <a
-                    href={p.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="mt-6 inline-flex items-center gap-1 text-[15px] font-medium text-link transition-colors hover:text-[var(--link-hover)]"
-                  >
-                    {c.linkLabel}
-                    <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" strokeWidth={2} aria-hidden />
-                  </a>
-                ) : null}
+
+                <div className="mt-8 flex flex-wrap gap-2.5">
+                  {project.links.map((link) => (
+                    <a
+                      key={link.href}
+                      href={link.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="project-link-pill inline-flex items-center gap-1.5"
+                    >
+                      {link.label}
+                      <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" strokeWidth={1.8} aria-hidden />
+                    </a>
+                  ))}
+                </div>
               </motion.article>
             </motion.li>
           ))}
