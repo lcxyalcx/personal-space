@@ -17,7 +17,7 @@ export function ProjectsSection() {
 
         <motion.ul
           className="grid gap-5 md:grid-cols-2 md:gap-6"
-          initial={false}
+          initial="hidden"
           whileInView="show"
           viewport={{ once: true, amount: 0.15, margin: "0px" }}
           variants={{
@@ -29,13 +29,13 @@ export function ProjectsSection() {
             <motion.li
               key={project.name}
               variants={{
-                hidden: { opacity: 0, y: 28 },
+                hidden: { opacity: 0, y: 32, scale: 0.985 },
                 show: { opacity: 1, y: 0, transition: spring },
               }}
             >
               <motion.article
                 className={`project-card group h-full ${i % 2 === 0 ? "project-card--teal" : "project-card--amber"}`}
-                whileHover={{ y: -4, boxShadow: "var(--elevation-hover)" }}
+                whileHover={{ y: -6, boxShadow: "var(--elevation-hover)" }}
                 transition={spring}
               >
                 <div className="flex flex-wrap items-start justify-between gap-4">
@@ -46,12 +46,12 @@ export function ProjectsSection() {
                         {project.year}
                       </span>
                     </div>
-                    <h3 className="mt-4 text-[1.9rem] font-semibold tracking-tight text-fg">{project.name}</h3>
-                    <p className="mt-1 text-sm text-muted">{project.role}</p>
+                    <h3 className="mt-4 text-[2rem] font-semibold tracking-[-0.05em] text-fg">{project.name}</h3>
+                    <p className="mt-1 text-sm font-medium text-muted">{project.role}</p>
                   </div>
                 </div>
 
-                <p className="mt-5 text-[16px] leading-relaxed text-muted">{project.description}</p>
+                <p className="mt-5 text-[16px] leading-[1.8] text-muted">{project.description}</p>
 
                 <p className="project-card__highlight mt-5">{project.highlight}</p>
 

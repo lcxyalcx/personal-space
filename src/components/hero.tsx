@@ -1,7 +1,16 @@
 "use client";
 
 import Image from "next/image";
-import { ArrowUpRight, FolderGit2, Mail, Sparkles, UsersRound, X } from "lucide-react";
+import {
+  ArrowRight,
+  ArrowUpRight,
+  FolderGit2,
+  Mail,
+  MapPin,
+  Sparkles,
+  UsersRound,
+  X,
+} from "lucide-react";
 import { motion, useReducedMotion, useScroll, useSpring, useTransform } from "framer-motion";
 import { useRef } from "react";
 import { HelloCycle } from "@/components/hello-cycle";
@@ -16,7 +25,7 @@ const socialConfig = [
   },
   {
     href: social.email,
-    label: "邮件",
+    label: "Email",
     Icon: Mail,
     show: !!social.email,
   },
@@ -32,9 +41,10 @@ const socialConfig = [
     Icon: X,
     show: !!social.twitter,
   },
-].filter((x) => x.show);
+].filter((item) => item.show);
 
-const spring = { type: "spring" as const, stiffness: 320, damping: 28 };
+const spring = { type: "spring" as const, stiffness: 220, damping: 26 };
+const ease = [0.22, 1, 0.36, 1] as const;
 
 export function Hero() {
   const sectionRef = useRef<HTMLElement | null>(null);
@@ -45,91 +55,104 @@ export function Hero() {
   });
 
   const scrollEase = useSpring(scrollYProgress, {
-    stiffness: reduce ? 520 : 86,
-    damping: reduce ? 520 : 24,
-    mass: reduce ? 0.08 : 0.45,
+    stiffness: reduce ? 420 : 92,
+    damping: reduce ? 420 : 24,
+    mass: reduce ? 0.1 : 0.46,
   });
 
-  const contentY = useTransform(scrollEase, [0, 1], [0, reduce ? 0 : 42]);
-  const boardY = useTransform(scrollEase, [0, 1], [0, reduce ? 0 : -24]);
+  const contentY = useTransform(scrollEase, [0, 1], [0, reduce ? 0 : 34]);
+  const boardY = useTransform(scrollEase, [0, 1], [0, reduce ? 0 : -18]);
+  const boardRotate = useTransform(scrollEase, [0, 1], [0, reduce ? 0 : -2.5]);
 
   return (
     <section
       ref={sectionRef}
       id="top"
-      className="relative flex min-h-[96vh] flex-col justify-center overflow-hidden px-4 pb-20 pt-24 sm:px-6 lg:pb-24"
+      className="relative flex min-h-[90svh] flex-col justify-center overflow-hidden px-4 pb-16 pt-28 sm:px-6 lg:pb-20 lg:pt-32"
     >
       <div className="pointer-events-none absolute inset-0 hero-glow" aria-hidden />
       <div className="pointer-events-none absolute inset-0 hero-mesh" aria-hidden />
 
       <motion.div
-        className="relative mx-auto grid w-full max-w-6xl items-start gap-10 lg:grid-cols-[minmax(0,1.14fr)_minmax(21rem,0.86fr)] lg:gap-12"
+        className="relative mx-auto grid w-full max-w-6xl items-start gap-10 lg:grid-cols-[minmax(0,1.08fr)_minmax(22rem,0.92fr)] lg:gap-12"
         style={{ y: contentY }}
       >
-        <div className="relative z-10 pt-4">
+        <div className="relative z-10">
+          <motion.div
+            className="hero-kicker"
+            initial={false}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease, delay: 0.04 }}
+          >
+            <span className="hero-kicker__pill">
+              <Sparkles className="h-3.5 w-3.5" strokeWidth={1.75} aria-hidden />
+              Personal Space
+            </span>
+            <span className="hero-kicker__meta">
+              <MapPin className="h-3.5 w-3.5" strokeWidth={1.75} aria-hidden />
+              Shanghai / Fudan University
+            </span>
+          </motion.div>
+
           <HelloCycle />
 
           <motion.p
-            className="text-center text-[11px] font-semibold uppercase tracking-[0.24em] text-[var(--primary-dark)] sm:text-left"
+            className="mt-3 text-[11px] font-semibold uppercase tracking-[0.26em] text-[var(--muted-2)] sm:text-left"
             initial={false}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ ...spring, delay: 0.05 }}
+            transition={{ duration: 0.58, ease, delay: 0.1 }}
           >
             {siteMeta.author} · Agent Systems · AI Product Engineering
           </motion.p>
 
           <motion.h1
-            className="mt-5 max-w-4xl text-balance font-display text-[clamp(2.85rem,7vw,5.85rem)] leading-[0.93] tracking-[-0.04em] text-fg sm:text-left"
+            className="mt-6 max-w-4xl text-balance font-display text-[clamp(3.4rem,8vw,6.6rem)] leading-[0.92] tracking-[-0.06em] text-fg sm:text-left"
             initial={false}
             animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-            transition={{ duration: 0.82, ease: "easeOut", delay: 0.12 }}
+            transition={{ duration: 0.82, ease, delay: 0.14 }}
           >
             {hero.headline}
           </motion.h1>
 
           <motion.p
-            className="mx-auto mt-6 max-w-2xl text-center text-[clamp(1.04rem,1.8vw,1.15rem)] leading-relaxed text-muted sm:mx-0 sm:text-left"
+            className="mt-6 max-w-2xl text-[clamp(1.05rem,1.7vw,1.2rem)] leading-[1.75] text-muted sm:text-left"
             initial={false}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ ...spring, delay: 0.2 }}
+            transition={{ duration: 0.68, ease, delay: 0.22 }}
           >
             {hero.subline}
           </motion.p>
 
           <motion.div
-            className="mt-7 flex flex-wrap items-center justify-center gap-2.5 sm:justify-start"
+            className="mt-9 flex flex-wrap items-center gap-3"
             initial={false}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ ...spring, delay: 0.26 }}
+            transition={{ duration: 0.68, ease, delay: 0.28 }}
           >
-            {hero.focusAreas.map((area, i) => (
-              <motion.span
-                key={area}
-                className="liquid-chip inline-flex items-center px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-muted"
-                initial={false}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ ...spring, delay: 0.28 + i * 0.04 }}
-              >
-                {area}
-              </motion.span>
-            ))}
+            <a href="#projects" className="hero-primary-button">
+              Selected Work
+              <ArrowRight className="h-4 w-4" strokeWidth={1.9} aria-hidden />
+            </a>
+            <a href="#blog" className="hero-secondary-button">
+              Writing & Notes
+            </a>
           </motion.div>
 
           {socialConfig.length > 0 ? (
             <motion.ul
-              className="mt-10 flex flex-wrap items-center justify-center gap-3 sm:justify-start"
+              className="mt-8 flex flex-wrap items-center gap-3"
               initial={false}
               animate="show"
               variants={{
                 hidden: {},
-                show: { transition: { staggerChildren: 0.07, delayChildren: 0.34 } },
+                show: { transition: { staggerChildren: 0.06, delayChildren: 0.34 } },
               }}
             >
               {socialConfig.map(({ href, label, Icon }) => (
                 <motion.li
                   key={label}
                   variants={{
-                    hidden: { opacity: 0, y: 14, scale: 0.96 },
+                    hidden: { opacity: 0, y: 12, scale: 0.98 },
                     show: { opacity: 1, y: 0, scale: 1, transition: spring },
                   }}
                 >
@@ -138,8 +161,8 @@ export function Hero() {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="hero-social-button inline-flex h-12 items-center gap-2 rounded-full px-4 text-[15px] font-medium text-fg focus-visible:ring-2 focus-visible:ring-[var(--link)] focus-visible:ring-offset-2"
-                    whileHover={{ scale: 1.03, y: -2 }}
-                    whileTap={{ scale: 0.97 }}
+                    whileHover={{ scale: 1.02, y: -2 }}
+                    whileTap={{ scale: 0.98 }}
                     transition={spring}
                   >
                     <Icon className="h-[18px] w-[18px] text-muted" strokeWidth={1.75} aria-hidden />
@@ -150,127 +173,138 @@ export function Hero() {
             </motion.ul>
           ) : null}
 
-          <motion.p
-            className="mx-auto mt-8 max-w-xl text-center text-sm leading-relaxed text-muted-2 sm:mx-0 sm:text-left"
+          <motion.div
+            className="mt-10 flex flex-wrap items-center gap-2.5"
             initial={false}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ ...spring, delay: 0.42 }}
+            transition={{ duration: 0.68, ease, delay: 0.38 }}
+          >
+            {hero.focusAreas.map((area, index) => (
+              <span
+                key={area}
+                className="liquid-chip inline-flex items-center px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-muted"
+                style={{ transitionDelay: `${index * 40}ms` }}
+              >
+                {area}
+              </span>
+            ))}
+          </motion.div>
+
+          <motion.p
+            className="mt-7 max-w-xl text-sm leading-relaxed text-muted-2"
+            initial={false}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.68, ease, delay: 0.44 }}
           >
             {hero.statusLine}
           </motion.p>
         </div>
 
-        <motion.aside className="hero-board relative" style={{ y: boardY }}>
-          <div className="hero-board__header">
-            <div className="flex items-center gap-3">
-              <div className="relative h-12 w-12 overflow-hidden rounded-2xl border border-white/10 bg-white/6">
+        <motion.aside className="hero-board relative" style={{ y: boardY, rotate: boardRotate }}>
+          <div className="hero-board__chrome">
+            <div className="flex items-center gap-2">
+              <span className="h-2.5 w-2.5 rounded-full bg-[rgba(255,95,86,0.82)]" />
+              <span className="h-2.5 w-2.5 rounded-full bg-[rgba(255,189,46,0.82)]" />
+              <span className="h-2.5 w-2.5 rounded-full bg-[rgba(39,201,63,0.82)]" />
+            </div>
+            <span className="hero-board__badge">Profile Overview</span>
+          </div>
+
+          <motion.div
+            className="hero-note-card"
+            initial={false}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.64, ease, delay: 0.16 }}
+          >
+            <div className="flex items-center gap-4">
+              <div className="relative h-16 w-16 overflow-hidden rounded-[1.35rem] border border-white/60 bg-white/65 shadow-[0_18px_34px_-24px_rgba(15,23,42,0.35)]">
                 <Image
                   src="/author-avatar.jpg"
                   alt={`${siteMeta.author} portrait`}
                   fill
-                  sizes="48px"
+                  sizes="64px"
                   className="object-cover"
                   priority
                 />
               </div>
-              <div>
-                <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/45">Field Notes</p>
-                <p className="mt-1 text-base font-medium text-white/90">How I think about systems, products, and recent work</p>
+              <div className="min-w-0">
+                <p className="hero-board__eyebrow">Personal Profile</p>
+                <h2 className="mt-1 text-[1.35rem] font-semibold tracking-[-0.03em] text-fg">
+                  {siteMeta.author}
+                </h2>
+                <p className="mt-1 text-sm leading-relaxed text-muted">
+                  Researching LLM systems, building agent products, and shipping tools with a
+                  bias toward clarity.
+                </p>
               </div>
             </div>
-            <span className="hero-board__badge">
-              <Sparkles className="h-3.5 w-3.5" strokeWidth={1.75} aria-hidden />
-              Ongoing
-            </span>
+          </motion.div>
+
+          <div className="mt-4 grid gap-4 sm:grid-cols-2">
+            <motion.div
+              className="hero-note-card"
+              initial={false}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.64, ease, delay: 0.22 }}
+            >
+              <p className="hero-board__eyebrow">Working Principles</p>
+              <div className="mt-4 space-y-4">
+                {hero.principles.map((item) => (
+                  <div key={item.title} className="border-l border-[rgba(15,23,42,0.08)] pl-4">
+                    <p className="text-sm font-semibold uppercase tracking-[0.16em] text-fg">
+                      {item.title}
+                    </p>
+                    <p className="mt-1.5 text-sm leading-relaxed text-muted">{item.detail}</p>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+
+            <motion.div
+              className="hero-note-card"
+              initial={false}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.64, ease, delay: 0.28 }}
+            >
+              <p className="hero-board__eyebrow">Recent Launches</p>
+              <div className="mt-4 space-y-3">
+                {projects.slice(0, 2).map((project) => (
+                  <div key={project.name} className="hero-update-row">
+                    <div>
+                      <p className="text-base font-semibold text-fg">{project.name}</p>
+                      <p className="mt-1 text-sm text-muted">{project.role}</p>
+                    </div>
+                    <a
+                      href={project.links[0]!.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 rounded-full border border-[rgba(15,23,42,0.08)] bg-white/72 px-3 py-1.5 text-xs font-medium uppercase tracking-[0.14em] text-fg transition-all hover:-translate-y-0.5 hover:border-[rgba(43,103,246,0.24)] hover:text-[var(--primary-dark)]"
+                    >
+                      View
+                      <ArrowUpRight className="h-3.5 w-3.5" strokeWidth={1.8} aria-hidden />
+                    </a>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
           </div>
 
-          <motion.div
-            className="hero-note-card mt-5"
-            initial={false}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ ...spring, delay: 0.16 }}
-          >
-            <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/42">How I work</p>
-            <div className="mt-4 space-y-4">
-              {hero.principles.map((item) => (
-                <div key={item.title} className="border-l border-white/14 pl-4">
-                  <p className="text-sm font-semibold uppercase tracking-[0.16em] text-white/78">{item.title}</p>
-                  <p className="mt-1.5 text-sm leading-relaxed text-white/60">{item.detail}</p>
-                </div>
-              ))}
-            </div>
-          </motion.div>
-
-          <motion.div
-            className="hero-note-card mt-4"
-            initial={false}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ ...spring, delay: 0.24 }}
-          >
-            <div className="flex items-center justify-between gap-3">
-              <div>
-                <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/42">Recent Public Updates</p>
-                <p className="mt-1 text-sm leading-relaxed text-white/62">最新公开项目会被收进作品集，但不会盖过整体研究方向。</p>
-              </div>
-            </div>
-
-            <div className="mt-4 space-y-3">
-              {projects.slice(0, 2).map((project) => (
-                <div key={project.name} className="hero-update-row">
-                  <div>
-                    <p className="text-base font-semibold text-white">{project.name}</p>
-                    <p className="mt-1 text-sm text-white/58">{project.role}</p>
-                  </div>
-                  <a
-                    href={project.links[0]!.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 rounded-full border border-white/12 bg-white/8 px-3 py-1.5 text-xs font-medium uppercase tracking-[0.14em] text-white/78 transition-colors hover:bg-white/14"
-                  >
-                    Open
-                    <ArrowUpRight className="h-3.5 w-3.5" strokeWidth={1.8} aria-hidden />
-                  </a>
-                </div>
-              ))}
-            </div>
-          </motion.div>
-
           <div className="mt-4 grid gap-3 sm:grid-cols-3">
-            {hero.stats.map((item, i) => {
-              const isBaseCard = i === hero.stats.length - 1;
-
-              return (
-                <motion.div
-                  key={item.label}
-                  className={`hero-stat-card${isBaseCard ? " hero-stat-card--surface" : ""}`}
-                  initial={false}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ ...spring, delay: 0.34 + i * 0.06 }}
-                >
-                  <p
-                    className={`text-[11px] font-semibold uppercase tracking-[0.18em] ${
-                      isBaseCard ? "text-[var(--muted-2)]" : "text-white/40"
-                    }`}
-                  >
-                    {item.label}
-                  </p>
-                  <p
-                    className={`mt-3 text-lg font-semibold leading-snug ${
-                      isBaseCard ? "text-[var(--fg)]" : "text-white"
-                    }`}
-                  >
-                    {item.value}
-                  </p>
-                  <p
-                    className={`mt-2 text-sm leading-relaxed ${
-                      isBaseCard ? "text-[var(--muted)]" : "text-white/60"
-                    }`}
-                  >
-                    {item.detail}
-                  </p>
-                </motion.div>
-              );
-            })}
+            {hero.stats.map((item, index) => (
+              <motion.div
+                key={item.label}
+                className="hero-stat-card"
+                initial={false}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.62, ease, delay: 0.34 + index * 0.05 }}
+              >
+                <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--muted-2)]">
+                  {item.label}
+                </p>
+                <p className="mt-3 text-lg font-semibold leading-snug text-fg">{item.value}</p>
+                <p className="mt-2 text-sm leading-relaxed text-muted">{item.detail}</p>
+              </motion.div>
+            ))}
           </div>
         </motion.aside>
       </motion.div>

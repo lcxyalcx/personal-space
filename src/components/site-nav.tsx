@@ -49,34 +49,39 @@ export function SiteNav() {
   const hashBase = isHome ? "" : "/";
 
   return (
-    <header className="fixed inset-x-0 top-3 z-50 px-3">
-      <div className="mx-auto flex h-12 max-w-6xl items-center justify-between rounded-full border border-[color-mix(in_oklab,#fff_68%,var(--border-strong))] bg-[color-mix(in_oklab,var(--surface)_68%,transparent)] px-3 shadow-[var(--nav-elev-shadow)] backdrop-blur-2xl backdrop-saturate-[1.45] sm:h-[3.25rem] sm:px-4">
+    <header className="fixed inset-x-0 top-4 z-50 px-4">
+      <div className="mx-auto flex max-w-6xl items-center justify-between rounded-[1.9rem] border border-[color-mix(in_oklab,#fff_76%,var(--border-strong))] bg-[color-mix(in_oklab,var(--surface)_72%,transparent)] px-4 py-2 shadow-[var(--nav-elev-shadow)] backdrop-blur-[28px] backdrop-saturate-[1.5]">
         <a
           href={`${hashBase}#top`}
           aria-label={siteMeta.author}
-          className="flex items-center gap-2 rounded-full text-[15px] font-semibold tracking-tight text-fg transition-opacity hover:opacity-70 focus-visible:ring-2 focus-visible:ring-[var(--link)] focus-visible:ring-offset-2"
+          className="flex items-center gap-3 rounded-full text-[15px] font-semibold tracking-tight text-fg transition-opacity hover:opacity-80 focus-visible:ring-2 focus-visible:ring-[var(--link)] focus-visible:ring-offset-2"
         >
           <Image
             src="/author-avatar.jpg"
             alt=""
-            width={28}
-            height={28}
-            className="h-7 w-7 shrink-0 rounded-[10px] object-cover shadow-sm ring-1 ring-black/[0.08]"
+            width={32}
+            height={32}
+            className="h-8 w-8 shrink-0 rounded-[12px] object-cover shadow-[0_12px_24px_-20px_rgba(15,23,42,0.45)] ring-1 ring-black/[0.05]"
             priority
           />
-          <span className="hidden sm:inline">{siteMeta.author}</span>
+          <div className="hidden sm:block">
+            <span className="block">{siteMeta.author}</span>
+            <span className="block text-[10px] font-semibold uppercase tracking-[0.22em] text-muted-2">
+              Personal Space
+            </span>
+          </div>
         </a>
-        <nav className="flex max-w-[min(100%,22rem)] flex-wrap items-center justify-end gap-0.5 sm:max-w-none sm:gap-1">
+        <nav className="flex max-w-[min(100%,22rem)] flex-wrap items-center justify-end gap-1 rounded-full border border-white/45 bg-white/48 p-1 shadow-[inset_0_1px_0_rgba(255,255,255,0.55)] sm:max-w-none">
           {navItems.map((item) => {
             const active = activeId === item.id;
             return (
               <a
                 key={item.id}
                 href={`${hashBase}#${item.id}`}
-                className={`rounded-full px-2.5 py-1.5 text-[13px] transition-[color,background,box-shadow] duration-200 focus-visible:ring-2 focus-visible:ring-[var(--link)] focus-visible:ring-offset-2 sm:px-3 ${
+                className={`rounded-full px-3 py-1.5 text-[13px] transition-[color,background,box-shadow,transform] duration-200 focus-visible:ring-2 focus-visible:ring-[var(--link)] focus-visible:ring-offset-2 ${
                   active
-                    ? "bg-[color-mix(in_oklab,var(--primary)_10%,transparent)] font-medium text-fg shadow-[inset_0_1px_0_rgba(255,255,255,0.65)] ring-1 ring-[color-mix(in_oklab,var(--primary)_22%,transparent)]"
-                    : "text-muted hover:bg-[color-mix(in_oklab,var(--primary)_6%,transparent)] hover:text-fg"
+                    ? "bg-[linear-gradient(180deg,rgba(255,255,255,0.94),rgba(240,246,255,0.82))] font-medium text-fg shadow-[0_10px_24px_-18px_rgba(15,23,42,0.32)] ring-1 ring-[color-mix(in_oklab,var(--primary)_22%,transparent)]"
+                    : "text-muted hover:bg-white/60 hover:text-fg"
                 }`}
               >
                 {item.label}

@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
-import { Fraunces, Manrope } from "next/font/google";
-import Script from "next/script";
+import { Manrope } from "next/font/google";
 import { DifyChatCue } from "@/components/dify-chat-cue";
 import { DifyChatOnboarding } from "@/components/dify-chat-onboarding";
 import { DifyChatPolish } from "@/components/dify-chat-polish";
@@ -12,12 +11,6 @@ import "./globals.css";
 const manrope = Manrope({
   subsets: ["latin"],
   variable: "--font-manrope",
-  display: "swap",
-});
-
-const fraunces = Fraunces({
-  subsets: ["latin"],
-  variable: "--font-fraunces",
   display: "swap",
 });
 
@@ -38,10 +31,7 @@ export default function RootLayout({
   const difyEnabled = Boolean(process.env.NEXT_PUBLIC_DIFY_CHATBOT_TOKEN);
 
   return (
-    <html
-      lang="zh-CN"
-      className={`h-full scroll-smooth antialiased ${manrope.variable} ${fraunces.variable}`}
-    >
+    <html lang="zh-CN" className={`h-full scroll-smooth antialiased ${manrope.variable}`}>
       <body className="min-h-full bg-bg text-fg">
         <div className="site-ambient" aria-hidden>
           <div className="site-ambient__grid" />
@@ -56,11 +46,7 @@ export default function RootLayout({
         <DifyChatPolish enabled={difyEnabled} />
         <DifyChatOnboarding enabled={difyEnabled} />
         <div className="relative z-10 flex min-h-full flex-col">
-          <MotionProvider>
-            {children}
-            <div id="custom-cursor-portal" aria-hidden="true" />
-            <Script src="/custom-cursor.js" strategy="afterInteractive" />
-          </MotionProvider>
+          <MotionProvider>{children}</MotionProvider>
         </div>
       </body>
     </html>

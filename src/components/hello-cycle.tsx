@@ -32,20 +32,20 @@ export function HelloCycle({ onChromaIndexChange }: Props) {
   }, [chromaIdx, onChromaIndexChange]);
 
   return (
-    <div className="hello-stage mb-3 min-h-[1.2em] overflow-visible pb-0.5 sm:mb-5">
+    <div className="hello-stage mb-2 min-h-[1.2em] overflow-visible pb-0.5 sm:mb-4">
       <AnimatePresence mode="wait">
         <motion.p
           key={lines[i]}
-          initial={false}
+          initial={{ opacity: 0, y: 8, filter: "blur(6px)" }}
           animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
           exit={{
             opacity: 0,
-            y: -16,
+            y: -10,
             filter: "blur(4px)",
-            transition: { duration: 0.52, ease: easeApple },
+            transition: { duration: 0.44, ease: easeApple },
           }}
-          transition={{ duration: 0.72, ease: easeApple }}
-          className="hello-line font-display text-center text-[clamp(2.7rem,10vw,5.4rem)] font-medium leading-[1.08] tracking-[-0.04em] sm:text-left"
+          transition={{ duration: 0.62, ease: easeApple }}
+          className="hello-line font-display text-center text-[clamp(1.95rem,4vw,3.1rem)] font-semibold leading-[1.04] tracking-[-0.05em] sm:text-left"
           style={{
             backgroundImage: bg,
             backgroundSize: "100% 100%",

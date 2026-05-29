@@ -14,7 +14,6 @@ type Base = {
     like: string;
     liked: string;
     suffix: string;
-    /** 无 Redis 时副提示，可选 */
     localHint?: string;
   };
   className?: string;
@@ -26,12 +25,12 @@ type Props =
   | (Base & { scope: "post"; href: string });
 
 async function fetchLike(scope: "site" | "post", href?: string): Promise<LikeState> {
-  const q =
-    scope === "site"
-      ? "scope=site"
-      : `scope=post&href=${encodeURIComponent(href ?? "")}`;
-  const res = await fetch(`/api/likes?${q}`, { cache: "no-store" });
-  if (!res.ok) throw new Error("likes fetch failed");
+  const query =
+    scope === "site" ? "scope=site" : `scope=post&href=${encodeURIComponent(href ?? "")}`;
+  const res = await fetch(`/api/likes?${query}`, { cache: "no-store" });
+  if (!res.ok) {
+    throw new Error("likes fetch failed");
+  }
   return (await res.json()) as LikeState;
 }
 
@@ -41,7 +40,11 @@ async function postLike(scope: "site" | "post", href?: string): Promise<LikeStat
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(scope === "site" ? { scope: "site" } : { scope: "post", href }),
   });
-  if (!res.ok) throw new Error("likes post failed");
+
+  if (!res.ok) {
+    throw new Error("likes post failed");
+  }
+
   return (await res.json()) as LikeState;
 }
 
@@ -69,9 +72,13 @@ export function LikeButton(props: Props) {
   }, [load]);
 
   const onClick = async () => {
-    if (!state || state.liked || busy) return;
+    if (!state || state.liked || busy) {
+      return;
+    }
+
     setBusy(true);
     setErr(false);
+
     try {
       const href = props.scope === "post" ? props.href : undefined;
       const data = await postLike(props.scope, href);
@@ -84,7 +91,7 @@ export function LikeButton(props: Props) {
   };
 
   const iconClass = size === "sm" ? "h-3.5 w-3.5" : "h-4 w-4";
-  const pad = size === "sm" ? "gap-1 px-2 py-1 text-xs" : "gap-1.5 px-2.5 py-1.5 text-[13px]";
+  const pad = size === "sm" ? "gap-1 px-2.5 py-1.5 text-xs" : "gap-1.5 px-3.5 py-2 text-[13px]";
 
   const liked = state?.liked ?? false;
   const count = state?.count;
@@ -96,8 +103,8 @@ export function LikeButton(props: Props) {
         type="button"
         onClick={onClick}
         disabled={!state || liked || busy}
-        className={`inline-flex items-center rounded-full border border-[var(--border-strong)] bg-bg-alt/80 font-medium text-muted transition-[color,background,border,transform] hover:border-link/35 hover:text-fg disabled:cursor-default disabled:opacity-90 ${pad} ${
-          liked ? "border-link/25 bg-[color-mix(in_oklab,var(--accent)_12%,transparent)] text-fg" : ""
+        className={`inline-flex items-center rounded-full border border-[var(--border-strong)] bg-[linear-gradient(180deg,rgba(255,255,255,0.88),rgba(244,248,252,0.74))] font-medium text-muted shadow-[0_18px_30px_-24px_rgba(15,23,42,0.24)] transition-[color,background,border,transform,box-shadow] hover:-translate-y-0.5 hover:border-link/35 hover:text-fg hover:shadow-[0_22px_36px_-24px_rgba(47,106,246,0.28)] disabled:cursor-default disabled:opacity-90 ${pad} ${
+          liked ? "border-link/25 bg-[linear-gradient(180deg,rgba(234,242,255,0.96),rgba(226,238,255,0.82))] text-fg" : ""
         }`}
         aria-pressed={liked}
         aria-label={liked ? labels.liked : labels.like}
@@ -118,7 +125,7 @@ export function LikeButton(props: Props) {
       {state && !state.persisted && labels.localHint ? (
         <p className="mt-1 max-w-[14rem] text-[11px] leading-snug text-muted-2">{labels.localHint}</p>
       ) : null}
-      {err ? <p className="mt-1 text-[11px] text-muted-2">网络异常，请稍后再试。</p> : null}
+      {err ? <p className="mt-1 text-[11px] text-muted-2">Network error. Please try again later.</p> : null}
     </div>
   );
 }
