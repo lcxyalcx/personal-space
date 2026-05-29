@@ -19,7 +19,7 @@ export function ResumeSection() {
   }));
 
   return (
-    <section id="resume" className="section-shell section-shell--violet scroll-mt-16 bg-bg-alt px-4 py-14 sm:px-6 sm:py-20">
+    <section id="resume" className="section-shell section-shell--violet scroll-mt-16 px-4 py-14 sm:px-6 sm:py-20">
       <div className="module-glass module-glass--alt mx-auto max-w-6xl px-5 py-12 sm:px-8 sm:py-16">
         <SectionHeading eyebrow={c.eyebrow} title={c.title} hint={c.hint} />
 
@@ -36,7 +36,13 @@ export function ResumeSection() {
               <span className="absolute -left-[5px] top-2 h-2.5 w-2.5 rounded-full border-2 border-surface bg-muted-2 ring-2 ring-bg-alt" />
               <motion.div
                 className="card-shine group relative overflow-hidden rounded-[2rem] border border-[var(--border)] bg-[linear-gradient(180deg,rgba(255,255,255,0.86),rgba(244,248,252,0.72))] p-6 shadow-[var(--elevation-1)] sm:p-8"
-                whileHover={{ y: -6, boxShadow: "var(--elevation-hover)" }}
+                whileHover={{
+                  y: -8,
+                  rotate: i % 2 === 0 ? -0.9 : 0.9,
+                  scale: 1.008,
+                  boxShadow: "var(--elevation-hover-strong)",
+                }}
+                whileTap={{ scale: 0.997 }}
                 transition={spring}
               >
                 <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
@@ -82,7 +88,7 @@ export function ResumeSection() {
               show: { transition: { staggerChildren: 0.1 } },
             }}
           >
-            {skillGroups.map(({ label, list, Icon }) => (
+            {skillGroups.map(({ label, list, Icon }, i) => (
               <motion.div
                 key={label}
                 variants={{
@@ -90,7 +96,13 @@ export function ResumeSection() {
                   show: { opacity: 1, y: 0, transition: spring },
                 }}
                 className="rounded-[2rem] border border-[var(--border)] bg-[linear-gradient(180deg,rgba(255,255,255,0.84),rgba(244,248,252,0.74))] p-6 shadow-[var(--elevation-1)] sm:p-7"
-                whileHover={{ y: -5, scale: 1.015 }}
+                whileHover={{
+                  y: -10,
+                  rotate: i === 1 ? 0.9 : i === 2 ? -1.1 : -0.7,
+                  scale: 1.018,
+                  boxShadow: "var(--elevation-hover-strong)",
+                }}
+                whileTap={{ scale: 0.996 }}
                 transition={spring}
               >
                 <div className="flex items-center gap-2.5">

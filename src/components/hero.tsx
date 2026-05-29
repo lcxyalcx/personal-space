@@ -240,17 +240,30 @@ export function Hero() {
             initial={false}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.64, ease, delay: 0.16 }}
+            whileHover={
+              reduce
+                ? undefined
+                : {
+                    y: -8,
+                    rotate: -1.1,
+                    scale: 1.012,
+                    boxShadow: "var(--elevation-hover-strong)",
+                  }
+            }
+            whileTap={reduce ? undefined : { scale: 0.997 }}
           >
             <div className="flex items-center gap-4">
-              <div className="relative h-16 w-16 overflow-hidden rounded-[1.35rem] border border-white/60 bg-white/65 shadow-[0_18px_34px_-24px_rgba(15,23,42,0.35)]">
-                <Image
-                  src="/author-avatar.jpg"
-                  alt={`${siteMeta.author} portrait`}
-                  fill
-                  sizes="64px"
-                  className="object-cover"
-                  priority
-                />
+              <div className="relative h-[4.75rem] w-[4.75rem] rounded-[1.5rem] border border-white/60 bg-[linear-gradient(180deg,rgba(255,255,255,0.84),rgba(236,244,253,0.68))] shadow-[0_18px_34px_-24px_rgba(15,23,42,0.35)]">
+                <div className="absolute inset-1 overflow-hidden rounded-[1.15rem] bg-[radial-gradient(circle_at_50%_24%,rgba(255,255,255,0.9),rgba(207,233,255,0.4)_64%,transparent_82%)]">
+                  <Image
+                    src="/author-avatar.jpg"
+                    alt={`${siteMeta.author} portrait`}
+                    fill
+                    sizes="76px"
+                    className="object-contain object-center scale-[1.04]"
+                    priority
+                  />
+                </div>
               </div>
               <div className="min-w-0">
                 <p className="hero-board__eyebrow">Personal Profile</p>
@@ -271,6 +284,17 @@ export function Hero() {
               initial={false}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.64, ease, delay: 0.22 }}
+              whileHover={
+                reduce
+                  ? undefined
+                  : {
+                      y: -8,
+                      rotate: 0.9,
+                      scale: 1.012,
+                      boxShadow: "var(--elevation-hover-strong)",
+                    }
+              }
+              whileTap={reduce ? undefined : { scale: 0.997 }}
             >
               <p className="hero-board__eyebrow">Working Principles</p>
               <div className="mt-4 space-y-4">
@@ -290,11 +314,27 @@ export function Hero() {
               initial={false}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.64, ease, delay: 0.28 }}
+              whileHover={
+                reduce
+                  ? undefined
+                  : {
+                      y: -8,
+                      rotate: -0.8,
+                      scale: 1.012,
+                      boxShadow: "var(--elevation-hover-strong)",
+                    }
+              }
+              whileTap={reduce ? undefined : { scale: 0.997 }}
             >
               <p className="hero-board__eyebrow">Recent Launches</p>
               <div className="mt-4 space-y-3">
                 {projects.slice(0, 2).map((project) => (
-                  <div key={project.name} className="hero-update-row">
+                  <motion.div
+                    key={project.name}
+                    className="hero-update-row"
+                    whileHover={reduce ? undefined : { x: 6 }}
+                    transition={spring}
+                  >
                     <div>
                       <p className="text-base font-semibold text-fg">{project.name}</p>
                       <p className="mt-1 text-sm text-muted">{project.role}</p>
@@ -308,7 +348,7 @@ export function Hero() {
                       View
                       <ArrowUpRight className="h-3.5 w-3.5" strokeWidth={1.8} aria-hidden />
                     </a>
-                  </div>
+                  </motion.div>
                 ))}
               </div>
             </motion.div>
@@ -322,6 +362,17 @@ export function Hero() {
                 initial={false}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.62, ease, delay: 0.34 + index * 0.05 }}
+                whileHover={
+                  reduce
+                    ? undefined
+                    : {
+                        y: -6,
+                        rotate: index % 2 === 0 ? -0.8 : 0.8,
+                        scale: 1.03,
+                        boxShadow: "var(--elevation-hover-strong)",
+                      }
+                }
+                whileTap={reduce ? undefined : { scale: 0.997 }}
               >
                 <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--muted-2)]">
                   {item.label}

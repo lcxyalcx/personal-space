@@ -11,7 +11,7 @@ export function ProjectsSection() {
   const c = sectionCopy.projects;
 
   return (
-    <section id="projects" className="section-shell section-shell--rose scroll-mt-16 bg-bg px-4 py-14 sm:px-6 sm:py-20">
+    <section id="projects" className="section-shell section-shell--rose scroll-mt-16 px-4 py-14 sm:px-6 sm:py-20">
       <div className="module-glass mx-auto max-w-6xl px-5 py-12 sm:px-8 sm:py-16">
         <SectionHeading eyebrow={c.eyebrow} title={c.title} hint={c.hint} />
 
@@ -35,7 +35,13 @@ export function ProjectsSection() {
             >
               <motion.article
                 className={`project-card group h-full ${i % 2 === 0 ? "project-card--teal" : "project-card--amber"}`}
-                whileHover={{ y: -6, boxShadow: "var(--elevation-hover)" }}
+                whileHover={{
+                  y: -10,
+                  rotate: i % 2 === 0 ? -1.2 : 1.2,
+                  scale: 1.012,
+                  boxShadow: "var(--elevation-hover-strong)",
+                }}
+                whileTap={{ scale: 0.996 }}
                 transition={spring}
               >
                 <div className="flex flex-wrap items-start justify-between gap-4">

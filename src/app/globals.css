@@ -31,6 +31,9 @@
   --chip-ring: rgba(47, 106, 246, 0.14);
   --elevation-1: 0 22px 48px -34px rgba(15, 23, 42, 0.16), 0 4px 14px rgba(15, 23, 42, 0.05);
   --elevation-hover: 0 38px 86px -40px rgba(15, 23, 42, 0.22), 0 18px 34px rgba(47, 106, 246, 0.08);
+  --elevation-hover-strong:
+    0 52px 112px -56px rgba(59, 66, 255, 0.32),
+    0 28px 58px -34px rgba(15, 23, 42, 0.2);
   --timeline-line: color-mix(in oklab, var(--fg) 10%, transparent);
 }
 
@@ -108,25 +111,75 @@ a {
   overflow: hidden;
   border-radius: 2.5rem;
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.86), rgba(247, 250, 253, 0.7)),
-    radial-gradient(circle at top right, rgba(114, 168, 255, 0.14), transparent 34%),
-    radial-gradient(circle at bottom left, rgba(219, 176, 255, 0.12), transparent 30%),
-    color-mix(in oklab, var(--surface) 92%, transparent);
-  border: 1px solid color-mix(in oklab, #fff 74%, var(--border-strong));
+    linear-gradient(180deg, rgba(255, 255, 255, 0.74), rgba(247, 250, 253, 0.48)),
+    radial-gradient(circle at top right, rgba(114, 168, 255, 0.18), transparent 34%),
+    radial-gradient(circle at bottom left, rgba(219, 176, 255, 0.16), transparent 30%),
+    color-mix(in oklab, var(--surface) 78%, transparent);
+  border: 1px solid color-mix(in oklab, #fff 68%, var(--border-strong));
   box-shadow:
-    0 30px 72px -42px rgba(59, 66, 255, 0.18),
+    0 36px 84px -52px rgba(59, 66, 255, 0.22),
     0 22px 48px -34px rgba(15, 23, 42, 0.16),
     0 4px 14px rgba(15, 23, 42, 0.05);
-  backdrop-filter: blur(24px) saturate(1.24);
-  -webkit-backdrop-filter: blur(24px) saturate(1.24);
+  backdrop-filter: blur(30px) saturate(1.28);
+  -webkit-backdrop-filter: blur(30px) saturate(1.28);
+  transition:
+    border-color 260ms ease,
+    box-shadow 320ms ease;
+}
+
+.module-glass::before,
+.module-glass::after {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  z-index: 0;
+}
+
+.module-glass::before {
+  inset: -8% -6% auto;
+  height: 52%;
+  background:
+    radial-gradient(circle at 14% 18%, rgba(255, 255, 255, 0.34), transparent 34%),
+    radial-gradient(circle at 86% 10%, rgba(103, 224, 255, 0.18), transparent 28%);
+  opacity: 0.92;
+}
+
+.module-glass::after {
+  inset: 26% -18% -18% 44%;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.22), transparent 66%);
+  filter: blur(28px);
+  opacity: 0.42;
+  transform: translate3d(0, 0, 0);
+  transition:
+    opacity 320ms ease,
+    transform 620ms ease;
+}
+
+.module-glass:hover {
+  border-color: color-mix(in oklab, var(--primary) 14%, var(--border-strong));
+  box-shadow:
+    0 46px 98px -56px rgba(59, 66, 255, 0.26),
+    0 24px 52px -34px rgba(15, 23, 42, 0.18),
+    0 4px 14px rgba(15, 23, 42, 0.05);
+}
+
+.module-glass:hover::after {
+  opacity: 0.64;
+  transform: translate3d(-5%, -4%, 0) scale(1.06);
+}
+
+.module-glass > * {
+  position: relative;
+  z-index: 1;
 }
 
 .module-glass--alt {
   background:
-    linear-gradient(180deg, rgba(250, 252, 255, 0.92), rgba(240, 244, 249, 0.8)),
-    radial-gradient(circle at top left, rgba(103, 224, 255, 0.14), transparent 28%),
-    radial-gradient(circle at bottom right, rgba(255, 127, 109, 0.1), transparent 30%),
-    color-mix(in oklab, var(--surface-strong) 94%, transparent);
+    linear-gradient(180deg, rgba(250, 252, 255, 0.8), rgba(240, 244, 249, 0.58)),
+    radial-gradient(circle at top left, rgba(103, 224, 255, 0.18), transparent 28%),
+    radial-gradient(circle at bottom right, rgba(255, 127, 109, 0.14), transparent 30%),
+    color-mix(in oklab, var(--surface-strong) 82%, transparent);
 }
 
 .module-glass--hero {
@@ -170,7 +223,7 @@ a {
     linear-gradient(90deg, rgba(88, 101, 122, 0.05) 1px, transparent 1px);
   background-size: 96px 96px;
   mask-image: radial-gradient(ellipse 78% 66% at 50% 38%, black 0%, transparent 76%);
-  opacity: 0.22;
+  opacity: 0.26;
   animation: site-ambient-grid-pan 120s linear infinite;
 }
 
@@ -224,7 +277,7 @@ a {
     rgba(157, 189, 255, 0.12),
     transparent
   );
-  opacity: 0.42;
+  opacity: 0.48;
   animation: site-ambient-float-c 48s ease-in-out infinite;
 }
 
@@ -238,7 +291,7 @@ a {
     transparent 60%
   );
   background-size: 220% 220%;
-  opacity: 0.4;
+  opacity: 0.48;
   animation: site-ambient-sheen 28s ease-in-out infinite;
 }
 
@@ -250,7 +303,7 @@ a {
     transparent 40%,
     color-mix(in oklab, var(--bg) 56%, transparent) 100%
   );
-  opacity: 0.56;
+  opacity: 0.46;
 }
 
 @keyframes site-ambient-grid-pan {
@@ -357,6 +410,32 @@ a {
   }
 }
 
+@keyframes section-shell-drift-a {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.62;
+  }
+
+  50% {
+    transform: translate3d(3rem, -1rem, 0) scale(1.08);
+    opacity: 0.78;
+  }
+}
+
+@keyframes section-shell-drift-b {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.56;
+  }
+
+  50% {
+    transform: translate3d(-2.5rem, 1.5rem, 0) scale(1.06);
+    opacity: 0.74;
+  }
+}
+
 ::selection {
   background: color-mix(in oklab, var(--primary) 22%, transparent);
   color: var(--fg);
@@ -376,22 +455,26 @@ a {
   inset: auto;
   z-index: 0;
   border-radius: 999px;
-  filter: blur(42px);
-  opacity: 0.58;
+  filter: blur(46px);
+  opacity: 0.66;
+  will-change: transform, opacity;
 }
 
 .section-shell::before {
-  width: 22rem;
-  height: 10rem;
-  top: 3rem;
-  left: -7rem;
+  width: 24rem;
+  height: 11rem;
+  top: 2.5rem;
+  left: -8rem;
+  animation: section-shell-drift-a 22s ease-in-out infinite;
 }
 
 .section-shell::after {
-  width: 18rem;
-  height: 9rem;
-  right: -5rem;
-  bottom: 2rem;
+  width: 20rem;
+  height: 10rem;
+  right: -6rem;
+  bottom: 1rem;
+  animation: section-shell-drift-b 26s ease-in-out infinite;
+  animation-delay: -8s;
 }
 
 .section-shell > * {
@@ -697,15 +780,25 @@ a {
   border-radius: 2.5rem;
   border: 1px solid color-mix(in oklab, #fff 76%, var(--border-strong));
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(243, 247, 252, 0.72)),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.84), rgba(243, 247, 252, 0.6)),
     linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(219, 176, 255, 0.12)),
-    color-mix(in oklab, var(--surface) 94%, transparent);
+    color-mix(in oklab, var(--surface) 86%, transparent);
   box-shadow:
-    0 60px 120px -60px rgba(59, 66, 255, 0.36),
-    0 44px 100px -54px rgba(15, 23, 42, 0.3);
+    0 68px 132px -64px rgba(59, 66, 255, 0.34),
+    0 46px 106px -58px rgba(15, 23, 42, 0.3);
   padding: 1.35rem;
-  backdrop-filter: blur(26px) saturate(1.18);
-  -webkit-backdrop-filter: blur(26px) saturate(1.18);
+  backdrop-filter: blur(28px) saturate(1.22);
+  -webkit-backdrop-filter: blur(28px) saturate(1.22);
+  transition:
+    border-color 260ms ease,
+    box-shadow 320ms ease;
+}
+
+.hero-board:hover {
+  border-color: color-mix(in oklab, var(--primary) 18%, var(--border-strong));
+  box-shadow:
+    0 78px 148px -68px rgba(59, 66, 255, 0.38),
+    0 52px 118px -62px rgba(15, 23, 42, 0.32);
 }
 
 .hero-board::before {
@@ -764,12 +857,14 @@ a {
 }
 
 .hero-note-card {
+  position: relative;
+  overflow: hidden;
   border-radius: 1.65rem;
   border: 1px solid color-mix(in oklab, #fff 70%, var(--border));
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.82), rgba(244, 248, 252, 0.68)),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.74), rgba(244, 248, 252, 0.52)),
     linear-gradient(135deg, rgba(114, 168, 255, 0.12), rgba(219, 176, 255, 0.1)),
-    rgba(255, 255, 255, 0.44);
+    rgba(255, 255, 255, 0.32);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8), 0 24px 40px -28px rgba(59, 66, 255, 0.16);
   padding: 1rem;
 }
@@ -781,6 +876,7 @@ a {
   gap: 1rem;
   border-top: 1px solid rgba(15, 23, 42, 0.06);
   padding-top: 0.9rem;
+  transition: border-color 220ms ease;
 }
 
 .hero-update-row:first-child {
@@ -789,14 +885,55 @@ a {
 }
 
 .hero-stat-card {
+  position: relative;
+  overflow: hidden;
   border-radius: 1.4rem;
   border: 1px solid color-mix(in oklab, #fff 70%, var(--border));
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.82), rgba(244, 248, 252, 0.7)),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.74), rgba(244, 248, 252, 0.54)),
     linear-gradient(135deg, rgba(103, 224, 255, 0.12), rgba(255, 255, 255, 0)),
-    rgba(255, 255, 255, 0.44);
+    rgba(255, 255, 255, 0.3);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.75), 0 20px 34px -28px rgba(103, 224, 255, 0.18);
   padding: 1rem;
+}
+
+.hero-note-card,
+.hero-stat-card {
+  transition:
+    border-color 220ms ease,
+    box-shadow 280ms ease;
+}
+
+.hero-note-card::after,
+.hero-stat-card::after {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset: auto -14% -30% auto;
+  width: 11rem;
+  height: 11rem;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.28), transparent 68%);
+  opacity: 0.28;
+  transform: translate3d(0, 0, 0);
+  transition:
+    opacity 280ms ease,
+    transform 360ms ease;
+}
+
+.hero-note-card:hover,
+.hero-note-card:focus-within,
+.hero-stat-card:hover,
+.hero-stat-card:focus-within {
+  border-color: color-mix(in oklab, var(--primary) 22%, var(--border));
+}
+
+.hero-note-card:hover::after,
+.hero-note-card:focus-within::after,
+.hero-stat-card:hover::after,
+.hero-stat-card:focus-within::after {
+  opacity: 0.56;
+  transform: translate3d(-8%, -10%, 0) scale(1.08);
 }
 
 .project-card {
@@ -805,13 +942,16 @@ a {
   border-radius: 2.15rem;
   border: 1px solid color-mix(in oklab, #fff 74%, var(--border));
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.86), rgba(245, 249, 253, 0.74)),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.82), rgba(245, 249, 253, 0.64)),
     linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(143, 77, 255, 0.12)),
-    color-mix(in oklab, var(--surface) 94%, transparent);
+    color-mix(in oklab, var(--surface) 88%, transparent);
   padding: 1.8rem;
   box-shadow:
     0 30px 62px -38px rgba(59, 66, 255, 0.16),
     var(--elevation-1);
+  transition:
+    border-color 240ms ease,
+    box-shadow 320ms ease;
 }
 
 .project-card::before {
@@ -823,18 +963,43 @@ a {
   background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.88), transparent);
 }
 
+.project-card::after {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset: auto -14% -26% auto;
+  width: 14rem;
+  height: 14rem;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.26), transparent 68%);
+  opacity: 0.34;
+  transform: translate3d(0, 0, 0);
+  transition:
+    opacity 280ms ease,
+    transform 420ms ease;
+}
+
+.project-card:hover {
+  border-color: color-mix(in oklab, var(--primary) 22%, var(--border));
+}
+
+.project-card:hover::after {
+  opacity: 0.58;
+  transform: translate3d(-10%, -10%, 0) scale(1.08);
+}
+
 .project-card--teal {
   background:
     radial-gradient(circle at top right, rgba(103, 224, 255, 0.28), transparent 34%),
     radial-gradient(circle at bottom left, rgba(143, 77, 255, 0.14), transparent 36%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.88), rgba(244, 249, 254, 0.76));
+    linear-gradient(180deg, rgba(255, 255, 255, 0.84), rgba(244, 249, 254, 0.68));
 }
 
 .project-card--amber {
   background:
     radial-gradient(circle at top right, rgba(219, 176, 255, 0.24), transparent 34%),
     radial-gradient(circle at bottom left, rgba(255, 127, 109, 0.16), transparent 36%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.88), rgba(246, 244, 252, 0.78));
+    linear-gradient(180deg, rgba(255, 255, 255, 0.84), rgba(246, 244, 252, 0.7));
 }
 
 .project-card__status {
@@ -868,6 +1033,16 @@ a {
   font-size: 0.75rem;
   font-weight: 600;
   letter-spacing: 0.04em;
+  transition:
+    transform 220ms ease,
+    border-color 220ms ease,
+    background-color 220ms ease;
+}
+
+.project-card:hover .project-chip {
+  transform: translateY(-2px);
+  border-color: color-mix(in oklab, var(--primary) 16%, var(--border-strong));
+  background: rgba(255, 255, 255, 0.8);
 }
 
 .project-link-pill {
@@ -904,6 +1079,12 @@ a {
   opacity: 0.7;
 }
 
+.card-shine {
+  transition:
+    border-color 220ms ease,
+    box-shadow 280ms ease;
+}
+
 .card-shine::after {
   content: "";
   pointer-events: none;
@@ -917,6 +1098,11 @@ a {
 .card-shine:hover::after,
 .card-shine:focus-within::after {
   transform: translateX(100%);
+}
+
+.card-shine:hover,
+.card-shine:focus-within {
+  border-color: color-mix(in oklab, var(--primary) 20%, var(--border));
 }
 
 @media (max-width: 640px) {
@@ -946,6 +1132,11 @@ a {
 
   .card-shine::after {
     display: none;
+  }
+
+  .section-shell::before,
+  .section-shell::after {
+    animation: none !important;
   }
 
   .site-ambient__grid,

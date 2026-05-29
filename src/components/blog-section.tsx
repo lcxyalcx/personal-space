@@ -45,7 +45,7 @@ export function BlogSection() {
   };
 
   return (
-    <section id="blog" className="section-shell section-shell--cyan scroll-mt-16 bg-bg-alt px-4 py-14 sm:px-6 sm:py-20">
+    <section id="blog" className="section-shell section-shell--cyan scroll-mt-16 px-4 py-14 sm:px-6 sm:py-20">
       <div className="module-glass module-glass--alt mx-auto max-w-6xl px-5 py-12 sm:px-8 sm:py-16">
         <div className="mb-12 flex flex-col gap-6 sm:mb-16 lg:flex-row lg:items-end lg:justify-between">
           <SectionHeading eyebrow={c.eyebrow} title={c.title} hint={c.hint} className="mb-0 flex-1" />
@@ -72,7 +72,11 @@ export function BlogSection() {
           </div>
         </div>
 
-        <div className="mb-10 flex flex-col gap-4 rounded-[2rem] border border-[var(--border)] bg-[linear-gradient(135deg,rgba(255,255,255,0.88),rgba(243,248,254,0.76))] px-5 py-5 shadow-[var(--elevation-1)] backdrop-blur-sm sm:flex-row sm:items-center sm:justify-between sm:px-6">
+        <motion.div
+          className="mb-10 flex flex-col gap-4 rounded-[2rem] border border-[var(--border)] bg-[linear-gradient(135deg,rgba(255,255,255,0.88),rgba(243,248,254,0.76))] px-5 py-5 shadow-[var(--elevation-1)] backdrop-blur-sm sm:flex-row sm:items-center sm:justify-between sm:px-6"
+          whileHover={{ y: -4, scale: 1.004, boxShadow: "var(--elevation-hover)" }}
+          transition={spring}
+        >
           <div>
             <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--muted-2)]">
               Site Appreciation
@@ -80,7 +84,7 @@ export function BlogSection() {
             <p className="mt-2 text-[15px] leading-relaxed text-muted">{c.siteLikeIntro}</p>
           </div>
           <LikeButton scope="site" labels={likeLabelsSite(c)} className="shrink-0" size="md" />
-        </div>
+        </motion.div>
 
         {blogPosts.length === 0 ? (
           <p className="rounded-2xl border border-dashed border-[var(--border-strong)] bg-surface/80 px-6 py-10 text-center text-[15px] leading-relaxed text-muted">
@@ -97,7 +101,7 @@ export function BlogSection() {
               show: { transition: { staggerChildren: 0.08 } },
             }}
           >
-            {blogPosts.map((post) => {
+            {blogPosts.map((post, i) => {
               const readMin = estimateReadMinutes(`${post.title}\n${post.excerpt}`);
               return (
                 <motion.li
@@ -107,7 +111,17 @@ export function BlogSection() {
                     show: { opacity: 1, y: 0, transition: spring },
                   }}
                 >
-                  <article className="card-shine group relative flex h-full flex-col overflow-hidden rounded-[2rem] border border-[var(--border)] bg-[linear-gradient(180deg,rgba(255,255,255,0.86),rgba(244,248,252,0.74))] p-6 shadow-[var(--elevation-1)] transition-shadow hover:shadow-[var(--elevation-hover)] sm:p-7">
+                  <motion.article
+                    className="card-shine group relative flex h-full flex-col overflow-hidden rounded-[2rem] border border-[var(--border)] bg-[linear-gradient(180deg,rgba(255,255,255,0.86),rgba(244,248,252,0.74))] p-6 shadow-[var(--elevation-1)] transition-shadow hover:shadow-[var(--elevation-hover)] sm:p-7"
+                    whileHover={{
+                      y: -10,
+                      rotate: i % 2 === 0 ? -1 : 1,
+                      scale: 1.012,
+                      boxShadow: "var(--elevation-hover-strong)",
+                    }}
+                    whileTap={{ scale: 0.996 }}
+                    transition={spring}
+                  >
                     <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-muted-2">
                       <span className="inline-flex items-center gap-1">
                         <Calendar className="h-3.5 w-3.5 shrink-0" strokeWidth={1.75} aria-hidden />
@@ -136,7 +150,11 @@ export function BlogSection() {
                           className="inline-flex items-center gap-1 text-sm font-medium text-link transition-colors hover:text-[var(--link-hover)]"
                         >
                           {c.readLabel}
-                          <ArrowUpRight className="h-4 w-4" strokeWidth={2} aria-hidden />
+                          <ArrowUpRight
+                            className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                            strokeWidth={2}
+                            aria-hidden
+                          />
                         </Link>
                       ) : (
                         <a
@@ -146,14 +164,18 @@ export function BlogSection() {
                           className="inline-flex items-center gap-1 text-sm font-medium text-link transition-colors hover:text-[var(--link-hover)]"
                         >
                           {c.readLabel}
-                          <ArrowUpRight className="h-4 w-4" strokeWidth={2} aria-hidden />
+                          <ArrowUpRight
+                            className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                            strokeWidth={2}
+                            aria-hidden
+                          />
                         </a>
                       )}
                     </div>
                     <div className="mt-6 flex flex-col gap-2 border-t border-[var(--border)] pt-4">
                       <LikeButton scope="post" href={post.href} labels={likeLabelsPost(c)} size="sm" />
                     </div>
-                  </article>
+                  </motion.article>
                 </motion.li>
               );
             })}

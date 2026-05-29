@@ -11,7 +11,7 @@ export function LifeSection() {
   const c = sectionCopy.life;
 
   return (
-    <section id="life" className="section-shell section-shell--amber scroll-mt-16 bg-bg px-4 py-14 sm:px-6 sm:py-20">
+    <section id="life" className="section-shell section-shell--amber scroll-mt-16 px-4 py-14 sm:px-6 sm:py-20">
       <div className="module-glass mx-auto max-w-6xl px-5 py-12 sm:px-8 sm:py-16">
         <SectionHeading eyebrow={c.eyebrow} title={c.title} hint={c.hint} />
         <div className="grid gap-10 lg:grid-cols-2 lg:gap-14">
@@ -37,7 +37,7 @@ export function LifeSection() {
                 show: { transition: { staggerChildren: 0.08 } },
               }}
             >
-              {hobbies.map((h) => (
+              {hobbies.map((h, i) => (
                 <motion.li
                   key={h.title}
                   variants={{
@@ -47,7 +47,13 @@ export function LifeSection() {
                 >
                   <motion.div
                     className="card-shine group relative overflow-hidden rounded-[2rem] border border-[var(--border)] bg-[linear-gradient(180deg,rgba(255,255,255,0.86),rgba(244,248,252,0.74))] p-6 shadow-[var(--elevation-1)] sm:p-7"
-                    whileHover={{ y: -5, boxShadow: "var(--elevation-hover)" }}
+                    whileHover={{
+                      y: -8,
+                      rotate: i % 2 === 0 ? -0.8 : 0.8,
+                      scale: 1.01,
+                      boxShadow: "var(--elevation-hover-strong)",
+                    }}
+                    whileTap={{ scale: 0.997 }}
                     transition={spring}
                   >
                     <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--muted-2)]">
@@ -91,7 +97,15 @@ export function LifeSection() {
                     hidden: { opacity: 0, x: 16, scale: 0.99 },
                     show: { opacity: 1, x: 0, transition: spring },
                   }}
-                  className="rounded-[1.7rem] border border-[var(--border)] bg-[linear-gradient(180deg,rgba(255,255,255,0.82),rgba(244,248,252,0.7))] px-5 py-5 text-[17px] leading-[1.8] text-muted shadow-[var(--elevation-1)]"
+                  className="card-shine group relative overflow-hidden rounded-[1.7rem] border border-[var(--border)] bg-[linear-gradient(180deg,rgba(255,255,255,0.82),rgba(244,248,252,0.7))] px-5 py-5 text-[17px] leading-[1.8] text-muted shadow-[var(--elevation-1)]"
+                  whileHover={{
+                    x: 8,
+                    y: -4,
+                    rotate: i % 2 === 0 ? -0.6 : 0.6,
+                    scale: 1.01,
+                    boxShadow: "var(--elevation-hover-strong)",
+                  }}
+                  whileTap={{ scale: 0.997 }}
                 >
                   {line}
                 </motion.li>
