@@ -27,7 +27,7 @@ export const siteMeta = {
 
 export const hero = {
   greetings: ["你好。", "Hello.", "Bonjour.", "こんにちは。"],
-  headline: "Shipping agent products with a researcher’s eye for latency, quality, and trust.",
+  headline: "Building agent products people trust.",
   subline:
     "I am Jacob Liu, a postgraduate student at Fudan University working at the intersection of LLM systems, agent evaluation, and AI product design. Recently, I shipped SpecAgentLab and Briefly AI to turn research workflows into tools people can actually use.",
   statusLine:
