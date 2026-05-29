@@ -19,11 +19,12 @@ const spring = { type: "spring" as const, stiffness: 420, damping: 32 };
 export function TimelineSection({ id, eyebrow, title, hint, items, ambient }: Props) {
   const ring = ambient === "alt" ? "ring-bg-alt" : "ring-bg";
   const sectionBg = ambient === "alt" ? "bg-bg-alt" : "bg-bg";
+  const shell = ambient === "alt" ? "section-shell section-shell--cyan" : "section-shell section-shell--amber";
 
   const glass = ambient === "alt" ? "module-glass module-glass--alt" : "module-glass";
 
   return (
-    <section id={id} className={`scroll-mt-16 ${sectionBg} px-4 py-14 sm:px-6 sm:py-20`}>
+    <section id={id} className={`${shell} scroll-mt-16 ${sectionBg} px-4 py-14 sm:px-6 sm:py-20`}>
       <div className={`mx-auto max-w-6xl ${glass} px-5 py-12 sm:px-8 sm:py-16`}>
         <SectionHeading eyebrow={eyebrow} title={title} hint={hint} />
         <ol className="relative mx-auto max-w-4xl space-y-0 border-l border-[var(--timeline-line)] pl-8 sm:pl-10">

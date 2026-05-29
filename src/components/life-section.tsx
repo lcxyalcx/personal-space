@@ -11,7 +11,7 @@ export function LifeSection() {
   const c = sectionCopy.life;
 
   return (
-    <section id="life" className="scroll-mt-16 bg-bg px-4 py-14 sm:px-6 sm:py-20">
+    <section id="life" className="section-shell section-shell--amber scroll-mt-16 bg-bg px-4 py-14 sm:px-6 sm:py-20">
       <div className="module-glass mx-auto max-w-6xl px-5 py-12 sm:px-8 sm:py-16">
         <SectionHeading eyebrow={c.eyebrow} title={c.title} hint={c.hint} />
         <div className="grid gap-10 lg:grid-cols-2 lg:gap-14">

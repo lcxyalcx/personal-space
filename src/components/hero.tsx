@@ -72,12 +72,27 @@ export function Hero() {
     >
       <div className="pointer-events-none absolute inset-0 hero-glow" aria-hidden />
       <div className="pointer-events-none absolute inset-0 hero-mesh" aria-hidden />
+      <div className="pointer-events-none absolute inset-0 hero-spectrum" aria-hidden />
+      <div className="hero-prism hero-prism--left" aria-hidden />
+      <div className="hero-prism hero-prism--right" aria-hidden />
+      <div className="hero-orbit hero-orbit--a" aria-hidden />
+      <div className="hero-orbit hero-orbit--b" aria-hidden />
 
       <motion.div
         className="relative mx-auto grid w-full max-w-6xl items-start gap-10 lg:grid-cols-[minmax(0,1.08fr)_minmax(22rem,0.92fr)] lg:gap-12"
         style={{ y: contentY }}
       >
         <div className="relative z-10">
+          <motion.div
+            className="hero-float-badge hero-float-badge--top"
+            initial={{ opacity: 0, y: 14, rotate: -6 }}
+            animate={{ opacity: 1, y: 0, rotate: -4 }}
+            transition={{ duration: 0.74, ease, delay: 0.22 }}
+          >
+            <span className="hero-float-badge__label">Latency</span>
+            <span className="hero-float-badge__value">Fast enough to feel alive</span>
+          </motion.div>
+
           <motion.div
             className="hero-kicker"
             initial={false}
@@ -198,6 +213,16 @@ export function Hero() {
           >
             {hero.statusLine}
           </motion.p>
+
+          <motion.div
+            className="hero-float-badge hero-float-badge--bottom"
+            initial={{ opacity: 0, y: 16, rotate: 7 }}
+            animate={{ opacity: 1, y: 0, rotate: 5 }}
+            transition={{ duration: 0.74, ease, delay: 0.36 }}
+          >
+            <span className="hero-float-badge__label">Quality</span>
+            <span className="hero-float-badge__value">Readable systems, visible tradeoffs</span>
+          </motion.div>
         </div>
 
         <motion.aside className="hero-board relative" style={{ y: boardY, rotate: boardRotate }}>
