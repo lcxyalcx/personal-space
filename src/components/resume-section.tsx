@@ -19,7 +19,7 @@ export function ResumeSection() {
   }));
 
   return (
-    <section id="resume" className="section-shell section-shell--violet scroll-mt-16 px-4 py-14 sm:px-6 sm:py-20">
+    <section id="resume" className="section-shell section-shell--violet scroll-mt-16 px-4 py-10 sm:px-6 sm:py-14">
       <div className="module-glass module-glass--alt mx-auto max-w-6xl px-5 py-12 sm:px-8 sm:py-16">
         <SectionHeading eyebrow={c.eyebrow} title={c.title} hint={c.hint} />
 

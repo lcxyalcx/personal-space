@@ -45,7 +45,7 @@ export function BlogSection() {
   };
 
   return (
-    <section id="blog" className="section-shell section-shell--cyan scroll-mt-16 px-4 py-14 sm:px-6 sm:py-20">
+    <section id="blog" className="section-shell section-shell--cyan scroll-mt-16 px-4 py-10 sm:px-6 sm:py-14">
       <div className="module-glass module-glass--alt mx-auto max-w-6xl px-5 py-12 sm:px-8 sm:py-16">
         <div className="mb-12 flex flex-col gap-6 sm:mb-16 lg:flex-row lg:items-end lg:justify-between">
           <SectionHeading eyebrow={c.eyebrow} title={c.title} hint={c.hint} className="mb-0 flex-1" />
