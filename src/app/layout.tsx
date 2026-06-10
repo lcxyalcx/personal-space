@@ -45,7 +45,7 @@ export default function RootLayout({
         {difyEnabled ? <DifyChatCue /> : null}
         <DifyChatPolish enabled={difyEnabled} />
         <DifyChatOnboarding enabled={difyEnabled} />
-        <div className="relative z-10 flex min-h-full flex-col">
+        <div className="site-content relative z-10 flex min-h-full flex-col">
           <MotionProvider>{children}</MotionProvider>
         </div>
       </body>
